@@ -1,0 +1,79 @@
+.searchbar-wrapper {
+  position: relative;
+  flex: 1;
+  max-width: 320px;
+}
+
+.searchbar-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.45rem 0.8rem;
+  background-color: #0a0a12;
+  border: 1px solid #2a2a3d;
+  border-radius: 999px;
+  color: #e5e7eb;
+  font-size: 0.85rem;
+}
+
+.searchbar-input:focus {
+  outline: none;
+  border-color: #00e5ff;
+}
+
+.searchbar-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  background-color: #12121f;
+  border: 1px solid #2a2a3d;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  max-height: 420px;
+  overflow-y: auto;
+  z-index: 200;
+  padding: 0.5rem 0;
+}
+
+.searchbar-status {
+  color: #9ca3af;
+  font-size: 0.85rem;
+  padding: 0.75rem 1rem;
+  margin: 0;
+}
+
+.searchbar-section {
+  padding: 0.4rem 0;
+}
+
+.searchbar-section-label {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #9ca3af;
+  padding: 0.3rem 1rem;
+}
+
+.searchbar-result-row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: transparent;
+  border: none;
+  color: #e5e7eb;
+  font-size: 0.85rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  text-align: left;
+}
+
+.searchbar-result-row:hover {
+  background-color: #1a1a2e;
+}
+
+.searchbar-contest-status {
+  color: #9ca3af;
+  font-size: 0.7rem;
+}

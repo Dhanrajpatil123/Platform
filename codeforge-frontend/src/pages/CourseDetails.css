@@ -1,0 +1,210 @@
+.course-details-page {
+  color: #e5e7eb;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.course-banner {
+  background-color: #12121f;
+  border: 1px solid #2a2a3d;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.course-banner-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.course-banner-hours {
+  font-size: 0.8rem;
+  color: #9ca3af;
+}
+
+.course-banner h1 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.4rem;
+}
+
+.course-banner-desc {
+  font-size: 0.9rem;
+  color: #9ca3af;
+  line-height: 1.5;
+  margin: 0 0 1.25rem 0;
+}
+
+.course-banner-progress {
+  margin-bottom: 1.25rem;
+}
+
+.course-banner-progress .progress-bar {
+  margin-top: 0;
+}
+
+.progress-label {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+.course-banner-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.syllabus h2 {
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+}
+
+.syllabus-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #12121f;
+  border: 1px solid #2a2a3d;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.syllabus-table th,
+.syllabus-table td {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  border-bottom: 1px solid #2a2a3d;
+}
+
+.syllabus-table th {
+  color: #9ca3af;
+  font-weight: 600;
+}
+
+.syllabus-solve-btn {
+  padding: 0.35rem 0.9rem;
+  font-size: 0.8rem;
+  text-decoration: none;
+}
+
+
+.progress-bar {
+  height: 6px;
+  background-color: #2a2a3d;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: #00e5ff;
+}
+
+.solved-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid #2a2a3d;
+}
+
+.solved-dot.solved {
+  background-color: #27c93f;
+  border-color: #27c93f;
+}
+
+.difficulty-badge {
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.difficulty-easy {
+  background-color: rgba(39, 201, 63, 0.15);
+  color: #27c93f;
+}
+
+.difficulty-medium {
+  background-color: rgba(255, 189, 46, 0.15);
+  color: #ffbd2e;
+}
+
+.difficulty-hard {
+  background-color: rgba(255, 95, 86, 0.15);
+  color: #ff5f56;
+}
+
+
+
+.course-details-status {
+  color: #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 4rem 0;
+}
+
+
+.course-enroll-error {
+  color: #ff5f56;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.course-leaderboard {
+  margin-top: 2rem;
+}
+
+.course-leaderboard h2 {
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #12121f;
+  border: 1px solid #2a2a3d;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.leaderboard-table th,
+.leaderboard-table td {
+  text-align: left;
+  padding: 0.7rem 1rem;
+  font-size: 0.875rem;
+  border-bottom: 1px solid #2a2a3d;
+}
+
+.leaderboard-table th {
+  color: #9ca3af;
+  font-weight: 600;
+}
+
+.leaderboard-rank {
+  font-weight: 600;
+  width: 60px;
+}
+
+.leaderboard-row-me {
+  background-color: rgba(0, 229, 255, 0.06);
+}
+
+.leaderboard-you-tag {
+  margin-left: 0.5rem;
+  font-size: 0.7rem;
+  color: #00e5ff;
+  border: 1px solid #00e5ff;
+  border-radius: 999px;
+  padding: 0.1rem 0.5rem;
+}
+
+
+
+

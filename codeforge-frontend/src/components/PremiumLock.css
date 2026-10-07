@@ -1,0 +1,48 @@
+.premium-lock {
+  display: flex;
+  justify-content: center;
+  padding: 3rem 1rem;
+  color: #e5e7eb;
+}
+
+.premium-lock-card {
+  width: 100%;
+  max-width: 520px;
+  background-color: #12121f;
+  border: 1px solid #2a2a3d;
+  border-radius: 14px;
+  padding: 2.25rem 2rem;
+  text-align: center;
+}
+
+.premium-lock-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.premium-lock-card h1 {
+  font-size: 1.4rem;
+  margin: 0 0 0.75rem 0;
+}
+
+.premium-lock-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+}
+
+.premium-lock-text {
+  color: #9ca3af;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0 0 1.5rem 0;
+}
+
+.premium-lock-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}

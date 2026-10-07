@@ -1,0 +1,57 @@
+.contest-leaderboard-page {
+  color: #e5e7eb;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.contest-leaderboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.contest-leaderboard-header h1 {
+  font-size: 1.3rem;
+  margin: 0;
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #12121f;
+  border: 1px solid #2a2a3d;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.leaderboard-table th,
+.leaderboard-table td {
+  text-align: left;
+  padding: 0.7rem 1rem;
+  font-size: 0.875rem;
+  border-bottom: 1px solid #2a2a3d;
+}
+
+.leaderboard-table th {
+  color: #9ca3af;
+  font-weight: 600;
+}
+
+.leaderboard-rank {
+  font-weight: 600;
+  width: 60px;
+}
+
+.leaderboard-row-me {
+  background-color: rgba(0, 229, 255, 0.06);
+}
+
+.leaderboard-you-tag {
+  margin-left: 0.5rem;
+  font-size: 0.7rem;
+  color: #00e5ff;
+  border: 1px solid #00e5ff;
+  border-radius: 999px;
+  padding: 0.1rem 0.5rem;
+}

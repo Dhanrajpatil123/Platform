@@ -1,0 +1,32 @@
+.announcement-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  background: linear-gradient(90deg, #00e5ff, #0a84ff);
+  color: #0a0a12;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.6rem 1.5rem;
+  text-align: center;
+  position: relative;
+}
+
+.announcement-text {
+  flex: 1;
+  text-align: center;
+}
+
+.announcement-dismiss-btn {
+  background: transparent;
+  border: none;
+  color: #0a0a12;
+  font-size: 0.9rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+.announcement-dismiss-btn:hover {
+  opacity: 1;
+}

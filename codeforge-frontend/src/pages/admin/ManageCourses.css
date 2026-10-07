@@ -1,0 +1,64 @@
+.syllabus-builder-empty {
+  color: #9ca3af;
+  font-size: 0.85rem;
+  margin: 0.5rem 0;
+}
+
+.syllabus-builder-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: #0a0a12;
+  border: 1px solid #2a2a3d;
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.syllabus-builder-order {
+  color: #9ca3af;
+  font-size: 0.8rem;
+  width: 20px;
+}
+
+.syllabus-builder-title {
+  flex: 1;
+  font-size: 0.85rem;
+}
+
+.syllabus-builder-controls {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.syllabus-builder-controls button {
+  background: transparent;
+  border: 1px solid #2a2a3d;
+  color: #e5e7eb;
+  border-radius: 6px;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.syllabus-builder-controls button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.syllabus-picker-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.syllabus-picker-row select {
+  flex: 1;
+}
+
+.syllabus-picker-row button {
+  cursor: pointer;
+  border: none;
+  white-space: nowrap;
+}

@@ -1,0 +1,375 @@
+/* Buttons */
+.btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 0.9rem;
+}
+
+.btn-primary {
+  background-color: #00e5ff;
+  color: #0f0f1a;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: #e5e7eb;
+  border: 1px solid #2a2a3d;
+}
+
+/* Difficulty badges */
+.difficulty-badge {
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.difficulty-easy {
+  background-color: rgba(39, 201, 63, 0.15);
+  color: #27c93f;
+}
+
+.difficulty-medium {
+  background-color: rgba(255, 189, 46, 0.15);
+  color: #ffbd2e;
+}
+
+.difficulty-hard {
+  background-color: rgba(255, 95, 86, 0.15);
+  color: #ff5f56;
+}
+
+/* Progress bar */
+.progress-bar {
+  height: 6px;
+  background-color: #2a2a3d;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: #00e5ff;
+}
+
+.progress-label {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+/* Solved indicator dot */
+.solved-dot {
+  margin-top: 4px;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid #2a2a3d;
+}
+
+.solved-dot {
+  margin-top: 4px;
+  display: inline-block;
+}
+
+.solved-dot.solved {
+  background-color: #27c93f;
+  border-color: #27c93f;
+}
+
+.catalog-table .solved-dot {
+  margin-top: 4px;
+}
+
+/* Status badges (Accepted / Wrong Answer, etc.) */
+.status-badge {
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.status-accepted {
+  background-color: rgba(39, 201, 63, 0.15);
+  color: #27c93f;
+}
+
+.status-failed {
+  background-color: rgba(255, 95, 86, 0.15);
+  color: #ff5f56;
+}
+
+.manage-page {
+  color: #e5e7eb;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.manage-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.manage-header h1 {
+  font-size: 1.4rem;
+  margin: 0;
+}
+
+.manage-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #12121f;
+  border: 1px solid #2a2a3d;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.manage-table th,
+.manage-table td {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  border-bottom: 1px solid #2a2a3d;
+}
+
+.manage-table th {
+  color: #9ca3af;
+  font-weight: 600;
+}
+
+.manage-row-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.manage-row-actions button {
+  cursor: pointer;
+  border: none;
+  padding: 0.35rem 0.8rem;
+  font-size: 0.8rem;
+}
+
+.btn-danger {
+  background-color: rgba(255, 95, 86, 0.15);
+  color: #ff5f56;
+  border-radius: 6px;
+}
+
+.btn-danger:hover {
+  background-color: rgba(255, 95, 86, 0.25);
+}
+
+.manage-empty {
+  text-align: center;
+  color: #9ca3af;
+  padding: 1.5rem;
+}
+
+.manage-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 2rem 1rem;
+  overflow-y: auto;
+  z-index: 100;
+}
+
+.manage-modal {
+  background-color: #12121f;
+  border: 1px solid #2a2a3d;
+  border-radius: 12px;
+  padding: 1.75rem;
+  width: 100%;
+  max-width: 600px;
+  color: #e5e7eb;
+}
+
+.manage-modal h2 {
+  margin: 0 0 1.25rem 0;
+  font-size: 1.2rem;
+}
+
+.manage-form-error {
+  background-color: rgba(255, 95, 86, 0.1);
+  border: 1px solid #ff5f56;
+  color: #ff5f56;
+  padding: 0.6rem 0.9rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.manage-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.manage-form label {
+  font-size: 0.85rem;
+  color: #9ca3af;
+  margin: 0.85rem 0 0.35rem;
+}
+
+.manage-form input,
+.manage-form textarea,
+.manage-form select {
+  padding: 0.55rem 0.75rem;
+  background-color: #0a0a12;
+  border: 1px solid #2a2a3d;
+  border-radius: 6px;
+  color: #e5e7eb;
+  font-size: 0.875rem;
+  font-family: inherit;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.manage-form input:focus,
+.manage-form textarea:focus,
+.manage-form select:focus {
+  outline: none;
+  border-color: #00e5ff;
+}
+
+.manage-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.manage-example-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  align-items: center;
+}
+
+.manage-remove-btn {
+  background: transparent;
+  border: 1px solid #2a2a3d;
+  color: #ff5f56;
+  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.manage-add-link {
+  background: transparent;
+  border: none;
+  color: #00e5ff;
+  font-size: 0.8rem;
+  cursor: pointer;
+  text-align: left;
+  padding: 0.25rem 0;
+  align-self: flex-start;
+}
+
+.manage-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.manage-form-actions button {
+  cursor: pointer;
+  border: none;
+}
+
+.tag-chip {
+  background-color: rgba(0, 229, 255, 0.08);
+  color: #00e5ff;
+  border: 1px solid rgba(0, 229, 255, 0.25);
+  border-radius: 999px;
+  padding: 0.1rem 0.55rem;
+  font-size: 0.7rem;
+  white-space: nowrap;
+}
+
+
+.premium-badge {
+  background: linear-gradient(135deg, #ffbd2e, #ff9f0a);
+  color: #0f0f1a;
+  font-size: 0.65rem;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 0.1rem 0.5rem;
+  margin-left: 0.4rem;
+  letter-spacing: 0.03em;
+}
+
+.premium-chip {
+  background-color: rgba(255, 189, 46, 0.12);
+  color: #ffbd2e;
+  border: 1px solid rgba(255, 189, 46, 0.35);
+  border-radius: 999px;
+  padding: 0.1rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  margin-left: 0.5rem;
+  white-space: nowrap;
+}
+
+.premium-chip-locked {
+  background-color: rgba(255, 95, 86, 0.1);
+  color: #ff8a80;
+  border-color: rgba(255, 95, 86, 0.35);
+}
+
+.logo-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  text-decoration: none;
+}
+
+.logo-wordmark {
+  font-weight: 700;
+  font-size: 1.15rem;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.logo-wordmark-primary {
+  color: #00e5ff;
+}
+
+.logo-wordmark-secondary {
+  color: #e5e7eb;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+ 

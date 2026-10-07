@@ -1,0 +1,56 @@
+.contest-float-timer {
+  position: fixed;
+  top: 72px;
+  right: 16px;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background-color: rgba(10, 10, 18, 0.9);
+  border: 1px solid rgba(0, 229, 255, 0.4);
+  color: #00e5ff;
+  border-radius: 999px;
+  padding: 0.4rem 0.5rem 0.4rem 0.8rem;
+  font-size: 0.8rem;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+}
+
+.contest-float-urgent {
+  border-color: #ff5f56;
+  color: #ff5f56;
+}
+
+.contest-float-time {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.contest-float-end-btn {
+  background-color: #00e5ff;
+  color: #0f0f1a;
+  border: none;
+  border-radius: 999px;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.contest-float-urgent .contest-float-end-btn {
+  background-color: #ff5f56;
+}
+
+.contest-float-end-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 640px) {
+  .contest-float-timer {
+    top: auto;
+    bottom: 16px;
+    right: 16px;
+  }
+}

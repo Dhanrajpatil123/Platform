@@ -1,0 +1,96 @@
+.contest-status-page {
+  color: #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 4rem 0;
+}
+
+.contest-details-page {
+  color: #e5e7eb;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.contest-banner {
+  background-color: #12121f;
+  border: 1px solid #2a2a3d;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.contest-banner-top {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.contest-banner h1 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.4rem;
+}
+
+.contest-banner-desc {
+  color: #9ca3af;
+  font-size: 0.9rem;
+  margin: 0 0 0.75rem 0;
+}
+
+.contest-banner-times {
+  font-size: 0.8rem;
+  color: #9ca3af;
+  margin: 0 0 1.25rem 0;
+}
+
+.contest-error {
+  color: #ff5f56;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.contest-banner-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.contest-problems h2 {
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+}
+
+.contest-problems-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #12121f;
+  border: 1px solid #2a2a3d;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.contest-problems-table th,
+.contest-problems-table td {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  border-bottom: 1px solid #2a2a3d;
+}
+
+.contest-problems-table th {
+  color: #9ca3af;
+  font-weight: 600;
+}
+
+.contest-locked-title {
+  color: #9ca3af;
+  cursor: help;
+}
+
+.contest-solve-btn {
+  padding: 0.35rem 0.9rem;
+  font-size: 0.8rem;
+  text-decoration: none;
+}

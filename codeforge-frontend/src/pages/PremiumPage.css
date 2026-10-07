@@ -1,0 +1,140 @@
+.premium-page {
+  color: #e5e7eb;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.premium-hero {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.premium-hero h1 {
+  font-size: 1.8rem;
+  margin: 0 0 0.4rem 0;
+  color: #ffbd2e;
+}
+
+.premium-hero p {
+  color: #9ca3af;
+  margin: 0;
+}
+
+.premium-dev-note {
+  background-color: rgba(255, 189, 46, 0.08);
+  border: 1px dashed #ffbd2e;
+  color: #ffbd2e;
+  border-radius: 8px;
+  padding: 0.7rem 1rem;
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.premium-message {
+  background-color: rgba(39, 201, 63, 0.1);
+  border: 1px solid #27c93f;
+  color: #27c93f;
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.premium-error {
+  background-color: rgba(255, 95, 86, 0.1);
+  border: 1px solid #ff5f56;
+  color: #ff5f56;
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.premium-active {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  background-color: rgba(255, 189, 46, 0.08);
+  border: 1px solid rgba(255, 189, 46, 0.4);
+  border-radius: 10px;
+  padding: 0.9rem 1.1rem;
+  margin-bottom: 1.25rem;
+}
+
+.premium-active span {
+  color: #9ca3af;
+  font-size: 0.85rem;
+}
+
+.premium-perks {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+}
+
+.premium-plans {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+}
+
+.premium-plan-card {
+  background-color: #12121f;
+  border: 1px solid #2a2a3d;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.premium-plan-card:hover {
+  border-color: #ffbd2e;
+}
+
+.premium-plan-card h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.05rem;
+}
+
+.premium-plan-price {
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: #ffbd2e;
+}
+
+.premium-plan-days {
+  color: #9ca3af;
+  font-size: 0.8rem;
+  margin: 0.25rem 0 1.25rem 0;
+}
+
+.premium-plan-card button {
+  cursor: pointer;
+  border: none;
+  width: 100%;
+}
+
+.premium-plan-card a {
+  display: block;
+  text-decoration: none;
+}
+
+.premium-cancel-btn {
+  display: block;
+  margin: 1.5rem auto 0;
+  background: transparent;
+  border: 1px solid #2a2a3d;
+  color: #9ca3af;
+  border-radius: 6px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.premium-cancel-btn:hover {
+  border-color: #ff5f56;
+  color: #ff5f56;
+}

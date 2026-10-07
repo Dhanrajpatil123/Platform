@@ -1,0 +1,113 @@
+.catalog-page {
+  color: #e5e7eb;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.catalog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.catalog-header h1 {
+  font-size: 1.4rem;
+  margin: 0;
+}
+
+.catalog-filters {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.catalog-search {
+  flex: 1 1 220px;
+  padding: 0.55rem 0.75rem;
+  background-color: #0a0a12;
+  border: 1px solid #2a2a3d;
+  border-radius: 6px;
+  color: #e5e7eb;
+  font-size: 0.9rem;
+}
+
+.catalog-filters select {
+  padding: 0.55rem 0.75rem;
+  background-color: #0a0a12;
+  border: 1px solid #2a2a3d;
+  border-radius: 6px;
+  color: #e5e7eb;
+  font-size: 0.9rem;
+}
+
+.catalog-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #12121f;
+  border: 1px solid #2a2a3d;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.catalog-table th,
+.catalog-table td {
+  text-align: left;
+  padding: 0.9rem 1rem;
+  font-size: 0.875rem;
+  border-bottom: 1px solid #2a2a3d;
+  vertical-align: top !important;
+}
+
+.catalog-table th {
+  color: #9ca3af;
+  font-weight: 600;
+}
+
+.catalog-table tbody tr:hover {
+  background-color: #171728;
+}
+
+.catalog-category {
+  color: #9ca3af;
+}
+
+.catalog-title-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.catalog-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.problem-link {
+  color: #e5e7eb;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.problem-link:hover {
+  color: #00e5ff;
+}
+
+.catalog-status-text {
+  color: #9ca3af;
+  font-size: 0.9rem;
+  padding: 1rem 0;
+}
+
+.catalog-error {
+  color: #ff5f56;
+}
+
+.catalog-empty {
+  text-align: center;
+  color: #9ca3af;
+  padding: 1.5rem;
+}

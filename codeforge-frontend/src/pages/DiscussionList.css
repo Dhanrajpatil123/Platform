@@ -1,0 +1,102 @@
+.discussion-list-page {
+  color: #e5e7eb;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.discussion-list-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.discussion-list-page h1 {
+  font-size: 1.3rem;
+  margin: 0 0 1.25rem 0;
+}
+
+.discussion-new-form {
+  background-color: #12121f;
+  border: 1px solid #2a2a3d;
+  border-radius: 10px;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.discussion-form-error {
+  background-color: rgba(255, 95, 86, 0.1);
+  border: 1px solid #ff5f56;
+  color: #ff5f56;
+  padding: 0.6rem 0.9rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.discussion-new-form label {
+  font-size: 0.85rem;
+  color: #9ca3af;
+  margin: 0.75rem 0 0.35rem;
+}
+
+.discussion-new-form input,
+.discussion-new-form textarea {
+  padding: 0.6rem 0.75rem;
+  background-color: #0a0a12;
+  border: 1px solid #2a2a3d;
+  border-radius: 6px;
+  color: #e5e7eb;
+  font-size: 0.875rem;
+  font-family: inherit;
+}
+
+.discussion-code-input {
+  font-family: "Fira Code", monospace;
+  font-size: 0.8rem;
+}
+
+.discussion-new-form button {
+  margin-top: 1rem;
+  align-self: flex-start;
+  cursor: pointer;
+  border: none;
+}
+
+.discussion-list-item {
+  display: block;
+  background-color: #12121f;
+  border: 1px solid #2a2a3d;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+  text-decoration: none;
+  color: #e5e7eb;
+}
+
+.discussion-list-item:hover {
+  border-color: #00e5ff;
+}
+
+.discussion-list-item-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.discussion-list-item-top h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.discussion-list-upvotes {
+  color: #9ca3af;
+  font-size: 0.85rem;
+}
+
+.discussion-list-meta {
+  margin: 0.35rem 0 0 0;
+  font-size: 0.8rem;
+  color: #9ca3af;
+}

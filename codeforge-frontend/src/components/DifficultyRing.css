@@ -1,0 +1,39 @@
+.difficulty-ring {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.difficulty-ring-inner {
+  position: absolute;
+  top: 11px;
+  left: 11px;
+  right: 11px;
+  bottom: 11px;
+  background-color: #12121f;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.difficulty-ring-number {
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #e5e7eb;
+  line-height: 1;
+}
+
+.difficulty-ring-total {
+  font-size: 0.85rem;
+  color: #9ca3af;
+}
+
+.difficulty-ring-label {
+  font-size: 0.72rem;
+  color: #9ca3af;
+  margin-top: 2px;
+}

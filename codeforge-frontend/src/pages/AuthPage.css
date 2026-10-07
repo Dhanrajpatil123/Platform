@@ -1,0 +1,135 @@
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #0a0a12;
+  padding: 1.5rem;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  background-color: #12121f;
+  border: 1px solid #2a2a3d;
+  border-radius: 12px;
+  padding: 2rem;
+  color: #e5e7eb;
+}
+
+.auth-back-link {
+  display: inline-block;
+  font-size: 0.85rem;
+  color: #9ca3af;
+  text-decoration: none;
+  margin-bottom: 1.25rem;
+}
+
+.auth-back-link:hover {
+  color: #00e5ff;
+}
+
+.auth-brand {
+  font-size: 1.5rem;
+  color: #00e5ff;
+  margin: 0 0 1.5rem 0;
+}
+
+.auth-tabs {
+  display: flex;
+  border: 1px solid #2a2a3d;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.auth-tab {
+  flex: 1;
+  padding: 0.6rem;
+  background-color: transparent;
+  color: #9ca3af;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.auth-tab.active {
+  background-color: #00e5ff;
+  color: #0f0f1a;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-form label {
+  font-size: 0.85rem;
+  margin: 0.75rem 0 0.35rem;
+  color: #9ca3af;
+}
+
+.auth-form input {
+  padding: 0.6rem 0.75rem;
+  background-color: #0a0a12;
+  border: 1px solid #2a2a3d;
+  border-radius: 6px;
+  color: #e5e7eb;
+  font-size: 0.9rem;
+}
+
+.auth-form input:focus {
+  outline: none;
+  border-color: #00e5ff;
+}
+
+.auth-forgot-link {
+  align-self: flex-end;
+  font-size: 0.8rem;
+  color: #00e5ff;
+  text-decoration: none;
+  margin-top: 0.5rem;
+}
+
+.auth-submit {
+  margin-top: 1.5rem;
+  width: 100%;
+  border: none;
+  cursor: pointer;
+}
+
+.auth-error {
+  background-color: rgba(255, 95, 86, 0.1);
+  border: 1px solid #ff5f56;
+  color: #ff5f56;
+  padding: 0.6rem 0.9rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.auth-form select {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  background-color: #0a0a12;
+  border: 1px solid #2a2a3d;
+  border-radius: 6px;
+  color: #e5e7eb;
+  font-size: 0.9rem;
+  font-family: inherit;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M0 0l5 6 5-6z' fill='%239ca3af'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 0.85rem center;
+}
+
+.auth-form select:focus {
+  outline: none;
+  border-color: #00e5ff;
+}
+
+.auth-form select option {
+  background-color: #0a0a12;
+  color: #e5e7eb;
+}

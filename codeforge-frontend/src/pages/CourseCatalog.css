@@ -1,0 +1,120 @@
+.course-catalog-page {
+  color: #e5e7eb;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.course-catalog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.course-catalog-header h1 {
+  font-size: 1.4rem;
+  margin: 0;
+}
+
+.course-catalog-header-links {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.course-catalog-filters {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.course-search {
+  flex: 1 1 220px;
+  padding: 0.55rem 0.75rem;
+  background-color: #0a0a12;
+  border: 1px solid #2a2a3d;
+  border-radius: 6px;
+  color: #e5e7eb;
+  font-size: 0.9rem;
+}
+
+.course-catalog-filters select {
+  padding: 0.55rem 0.75rem;
+  background-color: #0a0a12;
+  border: 1px solid #2a2a3d;
+  border-radius: 6px;
+  color: #e5e7eb;
+  font-size: 0.9rem;
+}
+
+.course-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+
+.course-card {
+  background-color: #12121f;
+  border: 1px solid #2a2a3d;
+  border-radius: 10px;
+  padding: 1.25rem;
+  text-decoration: none;
+  color: #e5e7eb;
+  display: block;
+}
+
+.course-card:hover {
+  border-color: #00e5ff;
+}
+
+.course-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.enrolled-badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #00e5ff;
+  border: 1px solid #00e5ff;
+  border-radius: 999px;
+  padding: 0.15rem 0.5rem;
+}
+
+.course-card h3 {
+  margin: 0 0 0.35rem 0;
+  font-size: 1rem;
+}
+
+.course-meta {
+  margin: 0 0 0.75rem 0;
+  font-size: 0.8rem;
+  color: #9ca3af;
+}
+
+.progress-bar {
+  margin-top: 0.5rem;
+  height: 6px;
+  background-color: #2a2a3d;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: #00e5ff;
+}
+
+.course-status-text {
+  color: #9ca3af;
+  font-size: 0.9rem;
+  padding: 1rem 0;
+}
+
+.course-error {
+  color: #ff5f56;
+}

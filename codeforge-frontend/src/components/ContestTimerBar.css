@@ -1,0 +1,16 @@
+.contest-timer-bar {
+  background-color: rgba(0, 229, 255, 0.08);
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  color: #00e5ff;
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  font-size: 0.85rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.contest-timer-urgent {
+  background-color: rgba(255, 95, 86, 0.1);
+  border-color: #ff5f56;
+  color: #ff5f56;
+}

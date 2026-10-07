@@ -1,0 +1,94 @@
+.donut3d-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.donut3d-stage {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  perspective: 600px;
+}
+
+.donut3d-base {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  transform: rotateX(55deg) translateY(14px);
+  filter: brightness(0.55) blur(1px);
+}
+
+.donut3d-top {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  transform: rotateX(55deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.5);
+}
+
+.donut3d-hole {
+  width: 58%;
+  height: 58%;
+  background-color: #0a0a12;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.donut3d-center-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #e5e7eb;
+  transform: rotateX(-55deg);
+}
+
+.donut3d-center-label {
+  font-size: 0.65rem;
+  color: #9ca3af;
+  transform: rotateX(-55deg);
+}
+
+.donut3d-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.donut3d-legend-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+}
+
+.donut3d-legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.donut3d-legend-label {
+  color: #e5e7eb;
+  min-width: 90px;
+}
+
+.donut3d-legend-value {
+  color: #9ca3af;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .donut3d-base,
+  .donut3d-top {
+    transform: none;
+  }
+}

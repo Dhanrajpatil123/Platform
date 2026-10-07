@@ -1,0 +1,95 @@
+body {
+  margin: 0;
+  background-color: #0a0a12;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #0f0f1a;
+  color: #fff;
+}
+
+.navbar-brand {
+  font-weight: bold;
+  font-size: 1.25rem;
+  color: #00e5ff;
+  text-decoration: none;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.navbar-links a {
+  color: #ccc;
+  text-decoration: none;
+}
+
+.navbar-links a:hover {
+  color: #00e5ff;
+}
+
+.app-content {
+  padding: 2rem;
+}
+
+
+.navbar-username {
+  color: #9ca3af;
+  font-size: 0.9rem;
+}
+
+.navbar-auth-link {
+  background-color: #00e5ff;
+  color: #0f0f1a;
+  padding: 0.4rem 0.9rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.navbar-logout-btn {
+  background-color: transparent;
+  border: 1px solid #2a2a3d;
+  color: #e5e7eb;
+  padding: 0.4rem 0.9rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.navbar-logout-btn:hover {
+  border-color: #00e5ff;
+  color: #00e5ff;
+}
+
+.navbar-admin-link {
+  color: #ffbd2e;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.navbar-admin-link:hover {
+  color: #ff9f0a;
+}
+
+.navbar-lockdown-note {
+  color: #9ca3af;
+  font-size: 0.8rem;
+}
+
+@media print {
+  .navbar,
+  .no-print {
+    display: none !important;
+  }
+}
+
+.navbar {
+  flex-wrap: wrap;
+  gap: 1rem;
+}
