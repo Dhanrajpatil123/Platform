@@ -35,6 +35,13 @@ export default function AdminDashboard() {
           <p>Set or clear the banner shown to everyone</p>
         </Link>
 
+        
+        <Link to="/admin/bootcamps" className="admin-action-card">
+          <h3>Manage Bootcamps</h3>
+          <p>Create, update, and manage bootcamp programs.</p>
+        </Link>
+
+
       </div>
     </div>
   );
