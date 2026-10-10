@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,22 +28,21 @@ public class CourseController {
 
     private final CourseService courseService;
 
-    // Public — matches SecurityConfig's permitAll() pattern for this path
     @GetMapping
     public ResponseEntity<List<CourseSummaryResponse>> getAllCourses() {
         return ResponseEntity.ok(courseService.getAllCourses());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getCourseById(@PathVariable Long id) {
+    public ResponseEntity<?> getCourseById(@PathVariable Long id, Authentication authentication) {
         try {
-            return ResponseEntity.ok(courseService.getCourseById(id));
+            String username = authentication != null ? authentication.getName() : null;
+            return ResponseEntity.ok(courseService.getCourseById(id, username));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", e.getMessage()));
         }
     }
 
-    // Admin only — same /admin/** path convention as ProblemController
     @PostMapping("/admin")
     public ResponseEntity<?> createCourse(@Valid @RequestBody CourseRequest request) {
         try {

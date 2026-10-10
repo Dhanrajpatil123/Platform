@@ -429,3 +429,44 @@
   border-color: #ffbd2e;
   color: #ffbd2e;
 }
+
+.workspace-course-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: rgba(0, 229, 255, 0.06);
+  border: 1px solid rgba(0, 229, 255, 0.25);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  color: #e5e7eb;
+  margin-bottom: 0.75rem;
+}
+
+.workspace-course-link {
+  margin-left: auto;
+  color: #00e5ff;
+  font-size: 0.8rem;
+  text-decoration: none;
+}
+
+.workspace-course-link:hover {
+  text-decoration: underline;
+}
+
+.workspace-course-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: rgba(0, 229, 255, 0.06);
+  border: 1px solid rgba(0, 229, 255, 0.25);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  color: #e5e7eb;
+  margin-bottom: 0.75rem;
+}
+.workspace-course-link { margin-left: auto; color: #00e5ff; font-size: 0.8rem; text-decoration: none; }
+.workspace-course-link:hover { text-decoration: underline; }
+.bookmark-toggle-btn { background: transparent; border: 1px solid #2a2a3d; color: #9ca3af; border-radius: 6px; padding: 0.2rem 0.65rem; font-size: 0.75rem; cursor: pointer; }
+.bookmark-toggle-btn.bookmarked { border-color: #ffbd2e; color: #ffbd2e; }

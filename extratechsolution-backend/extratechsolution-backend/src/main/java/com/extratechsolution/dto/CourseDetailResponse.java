@@ -11,12 +11,13 @@ import java.util.List;
 public class CourseDetailResponse {
 
     private Long id;
-    private String title;
-    private Difficulty difficulty;
+    private String title;    private Difficulty difficulty;
+
     private String category;
     private String description;
     private Integer estimatedHours;
     private boolean premium;
+    private long enrolledCount;
     private List<SyllabusItemResponse> syllabus;
 
     @Getter
@@ -26,5 +27,6 @@ public class CourseDetailResponse {
         private String problemTitle;
         private Difficulty problemDifficulty;
         private Integer sequenceOrder;
+        private boolean solved;
     }
 }

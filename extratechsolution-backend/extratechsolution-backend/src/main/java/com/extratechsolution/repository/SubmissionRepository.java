@@ -16,4 +16,6 @@ public interface SubmissionRepository extends JpaRepository<Submission, Long> {
     List<Submission> findByProblemIdAndLanguageAndStatus(Long problemId, String language, SubmissionStatus status);
 
     void deleteByProblemId(Long problemId);
+
+    boolean existsByUser_UsernameAndProblem_IdAndStatus(String username, Long problemId, SubmissionStatus status);
 }

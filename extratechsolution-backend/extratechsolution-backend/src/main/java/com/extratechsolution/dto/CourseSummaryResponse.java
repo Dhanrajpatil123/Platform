@@ -15,4 +15,5 @@ public class CourseSummaryResponse {
     private Integer estimatedHours;
     private Integer problemCount;
     private boolean premium;
+    private long enrolledCount;
 }

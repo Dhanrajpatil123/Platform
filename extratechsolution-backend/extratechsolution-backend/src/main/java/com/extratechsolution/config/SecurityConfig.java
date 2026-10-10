@@ -8,6 +8,7 @@ import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -70,6 +71,9 @@ public class SecurityConfig {
                         .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/contests/**").permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/contests/*/attempt").authenticated()
                         .requestMatchers("/api/discussions/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/bootcamps/admin/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/bootcamps/me").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/bootcamps", "/api/bootcamps/*").permitAll()
                         .anyRequest().authenticated()
                 )
 //                .addFilterBefore(rateLimitingFilter, JwtAuthFilter.class)

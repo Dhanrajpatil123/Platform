@@ -11,3 +11,9 @@ export function getProblemById(id) {
 export function getDailyChallenge() {
   return axiosClient.get("/problems/daily/today");
 }
+
+export function getProblemNeighbors(id, courseId) {
+  return axiosClient.get(`/problems/${id}/neighbors`, {
+    params: courseId ? { course: courseId } : {},
+  });
+}

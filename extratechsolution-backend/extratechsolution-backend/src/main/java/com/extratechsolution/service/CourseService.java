@@ -6,9 +6,11 @@ import com.extratechsolution.dto.CourseSummaryResponse;
 import com.extratechsolution.entity.Course;
 import com.extratechsolution.entity.CourseProblem;
 import com.extratechsolution.entity.Problem;
+import com.extratechsolution.enums.SubmissionStatus;
 import com.extratechsolution.repository.CourseEnrollmentRepository;
 import com.extratechsolution.repository.CourseRepository;
 import com.extratechsolution.repository.ProblemRepository;
+import com.extratechsolution.repository.SubmissionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +25,7 @@ public class CourseService {
     private final CourseRepository courseRepository;
     private final ProblemRepository problemRepository;
     private final CourseEnrollmentRepository enrollmentRepository;
+    private final SubmissionRepository submissionRepository;
 
     @Transactional(readOnly = true)
     public List<CourseSummaryResponse> getAllCourses() {
@@ -35,16 +38,17 @@ public class CourseService {
                         course.getCategory(),
                         course.getEstimatedHours(),
                         course.getSyllabus().size(),
-                        course.isPremium()
+                        course.isPremium(),
+                        enrollmentRepository.countByCourseId(course.getId())
                 ))
                 .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
-    public CourseDetailResponse getCourseById(Long id) {
+    public CourseDetailResponse getCourseById(Long id, String usernameOrNull) {
         Course course = courseRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Course not found with id: " + id));
-        return toDetailResponse(course);
+        return toDetailResponse(course, usernameOrNull);
     }
 
     @Transactional
@@ -52,7 +56,7 @@ public class CourseService {
         Course course = new Course();
         applyRequestToEntity(request, course);
         Course saved = courseRepository.save(course);
-        return toDetailResponse(saved);
+        return toDetailResponse(saved, null);
     }
 
     @Transactional
@@ -62,7 +66,7 @@ public class CourseService {
 
         applyRequestToEntity(request, course);
         Course saved = courseRepository.save(course);
-        return toDetailResponse(saved);
+        return toDetailResponse(saved, null);
     }
 
     @Transactional
@@ -105,15 +109,22 @@ public class CourseService {
         }
     }
 
-    private CourseDetailResponse toDetailResponse(Course course) {
+    private CourseDetailResponse toDetailResponse(Course course, String usernameOrNull) {
         List<CourseDetailResponse.SyllabusItemResponse> syllabusItems = course.getSyllabus()
                 .stream()
-                .map(cp -> new CourseDetailResponse.SyllabusItemResponse(
-                        cp.getProblem().getId(),
-                        cp.getProblem().getTitle(),
-                        cp.getProblem().getDifficulty(),
-                        cp.getSequenceOrder()
-                ))
+                .map(cp -> {
+                    boolean solved = usernameOrNull != null
+                            && submissionRepository.existsByUser_UsernameAndProblem_IdAndStatus(
+                            usernameOrNull, cp.getProblem().getId(), SubmissionStatus.ACCEPTED);
+
+                    return new CourseDetailResponse.SyllabusItemResponse(
+                            cp.getProblem().getId(),
+                            cp.getProblem().getTitle(),
+                            cp.getProblem().getDifficulty(),
+                            cp.getSequenceOrder(),
+                            solved
+                    );
+                })
                 .collect(Collectors.toList());
 
         return new CourseDetailResponse(
@@ -124,6 +135,7 @@ public class CourseService {
                 course.getDescription(),
                 course.getEstimatedHours(),
                 course.isPremium(),
+                enrollmentRepository.countByCourseId(course.getId()),
                 syllabusItems
         );
     }
