@@ -3,9 +3,17 @@ import { useParams, Link } from "react-router-dom";
 import { getBootcampById, enrollInBootcamp, leaveBootcamp } from "../api/bootcampApi";
 import { formatDate, timelineText } from "../utils/dateUtils";
 import "./Bootcamps.css";
+import BootcampSchedule from "../components/BootcampSchedule";
 
 const STATUS_LABEL = { UPCOMING: "Upcoming", ONGOING: "Ongoing", COMPLETED: "Completed" };
 const MODE_LABEL = { ONLINE: "Online", OFFLINE: "Offline", HYBRID: "Hybrid" };
+const PAY_METHODS = [
+  { key: "UPI", label: "UPI" },
+  { key: "CARD", label: "Credit / Debit Card" },
+  { key: "NETBANKING", label: "Net Banking" },
+];
+
+const rupees = (amount) => `₹${Number(amount).toLocaleString("en-IN")}`;
 
 export default function BootcampDetails() {
   const { bootcampId } = useParams();
@@ -15,6 +23,10 @@ export default function BootcampDetails() {
   const [loadError, setLoadError] = useState("");
   const [isBusy, setIsBusy] = useState(false);
   const [actionError, setActionError] = useState("");
+
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [payMethod, setPayMethod] = useState("UPI");
+  const [checkoutError, setCheckoutError] = useState("");
 
   const isLoggedIn = Boolean(localStorage.getItem("token"));
 
@@ -34,22 +46,50 @@ export default function BootcampDetails() {
     load();
   }, [bootcampId]);
 
-  const runAction = async (action) => {
+  const handleFreeEnroll = async () => {
     setActionError("");
     setIsBusy(true);
     try {
-      const response = await action(bootcampId);
+      const response = await enrollInBootcamp(bootcampId);
       setBootcamp(response.data);
     } catch (err) {
-      setActionError(err.response?.data?.error || "Something went wrong. Please try again.");
+      setActionError(err.response?.data?.error || "Could not enroll. Please try again.");
     } finally {
       setIsBusy(false);
     }
   };
 
-  const handleLeave = () => {
-    if (!window.confirm("Leave this bootcamp? Your seat will be released.")) return;
-    runAction(leaveBootcamp);
+  const handlePay = async () => {
+    setCheckoutError("");
+    setIsBusy(true);
+    try {
+      const response = await enrollInBootcamp(bootcampId, { paymentMethod: payMethod });
+      setBootcamp(response.data);
+      setIsCheckoutOpen(false);
+    } catch (err) {
+      setCheckoutError(err.response?.data?.error || "Payment failed. Please try again.");
+    } finally {
+      setIsBusy(false);
+    }
+  };
+
+  const handleLeave = async () => {
+    const warning =
+      bootcamp.fee > 0
+        ? "Leave this bootcamp? Your seat will be released. Fees are NOT refunded automatically — contact the administrator for refunds."
+        : "Leave this bootcamp? Your seat will be released.";
+    if (!window.confirm(warning)) return;
+
+    setActionError("");
+    setIsBusy(true);
+    try {
+      const response = await leaveBootcamp(bootcampId);
+      setBootcamp(response.data);
+    } catch (err) {
+      setActionError(err.response?.data?.error || "Could not leave the bootcamp.");
+    } finally {
+      setIsBusy(false);
+    }
   };
 
   if (isLoading) {
@@ -76,6 +116,7 @@ export default function BootcampDetails() {
     bootcamp.seats > 0 ? Math.min((bootcamp.enrolledCount / bootcamp.seats) * 100, 100) : 0;
   const isFull = seatsLeft === 0;
   const isCompleted = bootcamp.status === "COMPLETED";
+  const isPaid = bootcamp.fee > 0;
 
   return (
     <div className="bc-page">
@@ -85,6 +126,9 @@ export default function BootcampDetails() {
             {STATUS_LABEL[bootcamp.status]}
           </span>
           <span className="bc-mode">{MODE_LABEL[bootcamp.mode] || bootcamp.mode}</span>
+          <span className={isPaid ? "bc-fee" : "bc-fee bc-fee-free"}>
+            {isPaid ? rupees(bootcamp.fee) : "Free"}
+          </span>
           {!bootcamp.published && <span className="bc-draft">Draft (only admins see this)</span>}
         </div>
 
@@ -122,22 +166,41 @@ export default function BootcampDetails() {
             <button
               type="button"
               className="btn btn-primary"
-              onClick={() => runAction(enrollInBootcamp)}
+              onClick={() => {
+                setCheckoutError("");
+                if (isPaid) setIsCheckoutOpen(true);
+                else handleFreeEnroll();
+              }}
               disabled={isBusy || isFull || isCompleted}
             >
-              {isBusy
-                ? "Enrolling..."
-                : isCompleted
+              {isCompleted
                 ? "Bootcamp finished"
                 : isFull
                 ? "Bootcamp full"
-                : "Enroll now"}
+                : isBusy
+                ? "Enrolling..."
+                : isPaid
+                ? `Pay ${rupees(bootcamp.fee)} & enroll`
+                : "Enroll for free"}
             </button>
           )}
 
           {isLoggedIn && bootcamp.enrolled && (
             <>
               <span className="bc-enrolled">✓ You're enrolled</span>
+
+              {bootcamp.status === "COMPLETED" && (
+                <Link to="/certificates" className="btn btn-primary">
+                  🎓 Claim certificate
+                </Link>
+              )}
+
+              {isPaid && (
+                <span className="bc-muted">
+                  Paid {rupees(bootcamp.fee)}
+                  {bootcamp.paymentReference ? ` · Ref ${bootcamp.paymentReference}` : ""}
+                </span>
+              )}
               <button
                 type="button"
                 className="btn btn-secondary"
@@ -182,6 +245,68 @@ export default function BootcampDetails() {
           ))}
         </div>
       </section>
+
+      {/* Bootcamp schedule */}
+      <BootcampSchedule
+        bootcampId={bootcamp.id}
+        enrolled={bootcamp.enrolled}
+      /> 
+
+      {isCheckoutOpen && (
+        <div className="bc-modal-overlay" onClick={() => !isBusy && setIsCheckoutOpen(false)}>
+          <div className="bc-modal" onClick={(e) => e.stopPropagation()}>
+            <h2>Checkout</h2>
+            <div className="bc-order">
+              <div>
+                <strong>{bootcamp.title}</strong>
+                <div className="bc-muted">
+                  {formatDate(bootcamp.startDate)} → {formatDate(bootcamp.endDate)}
+                </div>
+              </div>
+              <div className="bc-order-amount">{rupees(bootcamp.fee)}</div>
+            </div>
+
+            <label className="bc-modal-label">Payment method</label>
+            <div className="bc-pay-options">
+              {PAY_METHODS.map((m) => (
+                <label
+                  key={m.key}
+                  className={payMethod === m.key ? "bc-pay-option active" : "bc-pay-option"}
+                >
+                  <input
+                    type="radio"
+                    name="payMethod"
+                    value={m.key}
+                    checked={payMethod === m.key}
+                    onChange={() => setPayMethod(m.key)}
+                  />
+                  {m.label}
+                </label>
+              ))}
+            </div>
+
+            <p className="bc-demo-note">
+              Demo payment — no real money is charged. A live payment gateway can be connected later.
+            </p>
+
+            {checkoutError && <p className="bc-error">{checkoutError}</p>}
+
+            <div className="bc-actions">
+              <button type="button" className="btn btn-primary" onClick={handlePay} disabled={isBusy}>
+                {isBusy ? "Processing..." : `Pay ${rupees(bootcamp.fee)}`}
+              </button>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={() => setIsCheckoutOpen(false)}
+                disabled={isBusy}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

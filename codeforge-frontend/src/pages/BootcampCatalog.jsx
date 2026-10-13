@@ -110,6 +110,9 @@ export default function BootcampCatalog() {
                   {STATUS_LABEL[b.status]}
                 </span>
                 <span className="bc-mode">{MODE_LABEL[b.mode] || b.mode}</span>
+                <span className={b.fee > 0 ? "bc-fee" : "bc-fee bc-fee-free"}>
+                  {b.fee > 0 ? `₹${b.fee.toLocaleString("en-IN")}` : "Free"}
+                </span>
               </div>
 
               <h3>

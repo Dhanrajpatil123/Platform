@@ -41,6 +41,11 @@ export default function AdminDashboard() {
           <p>Create, update, and manage bootcamp programs.</p>
         </Link>
 
+        <Link to="/admin/certificates" className="admin-action-card">
+          <h3>Manage Certificates</h3>
+          <p>Create, update, and manage certificates.</p>
+        </Link>
+
 
       </div>
     </div>

@@ -53,4 +53,7 @@ public class Bootcamp {
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    @Column(nullable = false, columnDefinition = "INT NOT NULL DEFAULT 0")
+    private int fee = 0;   // rupees; 0 = free
 }

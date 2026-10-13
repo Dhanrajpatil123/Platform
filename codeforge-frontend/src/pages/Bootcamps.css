@@ -63,3 +63,38 @@
 .bc-table th { color: #9ca3af; font-weight: 600; }
 .bc-link { color: #00e5ff; text-decoration: none; }
 .bc-row-actions { display: flex; gap: 0.5rem; }
+
+
+.bc-fee { font-size: 0.75rem; font-weight: 700; color: #ffbd2e; background: rgba(255, 189, 46, 0.1); border: 1px solid rgba(255, 189, 46, 0.35); border-radius: 999px; padding: 0.15rem 0.65rem; }
+.bc-fee-free { color: #27c93f; background: rgba(39, 201, 63, 0.1); border-color: rgba(39, 201, 63, 0.35); }
+
+.bc-modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.65); display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 1rem; }
+.bc-modal { background: #12121f; border: 1px solid #2a2a3d; border-radius: 14px; padding: 1.75rem; width: 100%; max-width: 440px; }
+.bc-modal h2 { margin: 0 0 1rem 0; font-size: 1.2rem; }
+.bc-order { display: flex; justify-content: space-between; align-items: center; gap: 1rem; background: #0a0a12; border: 1px solid #2a2a3d; border-radius: 10px; padding: 0.9rem 1rem; }
+.bc-order-amount { font-size: 1.25rem; font-weight: 700; color: #00e5ff; }
+.bc-modal-label { display: block; font-size: 0.8rem; color: #9ca3af; margin: 1.1rem 0 0.4rem 0; }
+.bc-pay-options { display: flex; flex-direction: column; gap: 0.5rem; }
+.bc-pay-option { display: flex; align-items: center; gap: 0.6rem; padding: 0.65rem 0.85rem; border: 1px solid #2a2a3d; border-radius: 8px; cursor: pointer; font-size: 0.9rem; }
+.bc-pay-option.active { border-color: #00e5ff; background: rgba(0, 229, 255, 0.06); }
+.bc-demo-note { font-size: 0.75rem; color: #9ca3af; margin: 0.9rem 0 0 0; }
+
+
+.bc-attendance-summary { background: #12121f; border: 1px solid #2a2a3d; border-radius: 10px; padding: 0.9rem 1.1rem; margin-bottom: 1rem; }
+.bc-session-list { display: flex; flex-direction: column; gap: 0.7rem; }
+.bc-session { display: flex; gap: 1rem; align-items: center; background: #12121f; border: 1px solid #2a2a3d; border-radius: 12px; padding: 0.9rem 1.1rem; }
+.bc-session-live { border-color: #27c93f; box-shadow: 0 0 0 1px rgba(39, 201, 63, 0.25); }
+.bc-session-completed { opacity: 0.8; }
+.bc-session-date { min-width: 52px; text-align: center; background: #0a0a12; border: 1px solid #2a2a3d; border-radius: 10px; padding: 0.4rem 0.3rem; }
+.bc-session-day { font-size: 1.3rem; font-weight: 700; color: #00e5ff; line-height: 1.1; }
+.bc-session-month { font-size: 0.7rem; text-transform: uppercase; color: #9ca3af; }
+.bc-session-body { flex: 1; min-width: 0; }
+.bc-session-title { font-weight: 600; margin-bottom: 0.2rem; display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+.bc-session-desc { font-size: 0.82rem; color: #d1d5db; margin-top: 0.35rem; white-space: pre-wrap; }
+.bc-session-side { display: flex; align-items: center; }
+.bc-live { font-size: 0.7rem; color: #27c93f; font-weight: 700; }
+.bc-today { font-size: 0.65rem; color: #ffbd2e; border: 1px solid rgba(255, 189, 46, 0.4); border-radius: 999px; padding: 0.05rem 0.5rem; }
+.bc-present { color: #27c93f; font-weight: 600; font-size: 0.85rem; }
+.bc-absent { color: #ff5f56; font-weight: 600; font-size: 0.85rem; }
+.bc-attendance-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem 1rem; margin: 1rem 0; }
+.bc-attendance-panel { margin-top: 1.5rem; }

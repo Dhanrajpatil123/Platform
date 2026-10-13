@@ -74,14 +74,6 @@ const handleExportCsv = () => {
     <div className="contest-report-page">
       <div className="manage-header">
         <h1>{report.contestTitle} — Report</h1>
-        {/* <div className="manage-header-actions">
-          <button type="button" className="btn btn-secondary" onClick={handleExportCsv}>
-            ⬇ Export CSV
-          </button>
-          <Link to="/admin/contests" className="btn btn-secondary">
-            Back to Manage Contests
-          </Link>
-        </div> */}
 
         <div className="manage-header-actions no-print">
           <button type="button" className="btn btn-secondary" onClick={handleExportCsv}>

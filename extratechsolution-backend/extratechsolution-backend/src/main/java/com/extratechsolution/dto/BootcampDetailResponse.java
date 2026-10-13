@@ -20,6 +20,8 @@ public class BootcampDetailResponse {
     private int enrolledCount;
     private boolean published;
     private boolean enrolled;
+    private int fee;
+    private String paymentReference;   // the viewer's own payment reference, if enrolled and paid
     private List<CourseItem> courses;
 
     @Getter

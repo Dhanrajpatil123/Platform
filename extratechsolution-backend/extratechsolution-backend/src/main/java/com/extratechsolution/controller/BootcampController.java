@@ -1,5 +1,6 @@
 package com.extratechsolution.controller;
 
+import com.extratechsolution.dto.BootcampEnrollRequest;
 import com.extratechsolution.dto.BootcampRequest;
 import com.extratechsolution.service.BootcampService;
 import lombok.RequiredArgsConstructor;
@@ -38,8 +39,10 @@ public class BootcampController {
     }
 
     @PostMapping("/{id}/enroll")
-    public ResponseEntity<?> enroll(@PathVariable Long id, Authentication authentication) {
-        return ResponseEntity.ok(bootcampService.enroll(id, name(authentication)));
+    public ResponseEntity<?> enroll(@PathVariable Long id,
+                                    @RequestBody(required = false) BootcampEnrollRequest request,
+                                    Authentication authentication) {
+        return ResponseEntity.ok(bootcampService.enroll(id, request, name(authentication)));
     }
 
     @DeleteMapping("/{id}/enroll")

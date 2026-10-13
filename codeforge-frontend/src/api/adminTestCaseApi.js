@@ -11,3 +11,16 @@ export function addTestCase(problemId, data) {
 export function deleteTestCase(problemId, testCaseId) {
   return axiosClient.delete(`/problems/admin/${problemId}/testcases/${testCaseId}`);
 }
+
+export function bulkImportTestCases(problemId, file, replaceExisting) {
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("replaceExisting", replaceExisting ? "true" : "false");
+  return axiosClient.post(`/problems/admin/${problemId}/test-cases/bulk-import`, formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+}
+
+export function downloadSampleTestCaseZip() {
+  return axiosClient.get("/problems/admin/test-cases/sample-zip", { responseType: "blob" });
+}

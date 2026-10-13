@@ -34,7 +34,7 @@ const FEATURES = [
   },
   {
     title: "Discussions",
-    desc: "Read and share approaches per problem, upvote the best explanations, and learn from how others solved it.",
+    desc: "Read and share approaches per problem, upvote the best explanavtions, and learn from how others solved it.",
     icon: "💬",
   },
 ];

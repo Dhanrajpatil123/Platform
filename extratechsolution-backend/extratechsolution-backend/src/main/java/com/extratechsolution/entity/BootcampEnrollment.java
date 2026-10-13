@@ -31,4 +31,9 @@ public class BootcampEnrollment {
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime enrolledAt = LocalDateTime.now();
+
+    @Column(nullable = false, columnDefinition = "INT NOT NULL DEFAULT 0")
+    private int amountPaid = 0;
+
+    private String paymentReference;
 }

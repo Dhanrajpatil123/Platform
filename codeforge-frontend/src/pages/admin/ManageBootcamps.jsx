@@ -11,6 +11,9 @@ import {
 import { formatDate } from "../../utils/dateUtils";
 import "../Bootcamps.css";
 
+
+
+
 const EMPTY_FORM = {
   title: "",
   description: "",
@@ -18,9 +21,11 @@ const EMPTY_FORM = {
   endDate: "",
   mode: "ONLINE",
   seats: 30,
+  fee: 0, // ADD THIS LINE
   published: true,
   courseIds: [],
 };
+
 
 export default function ManageBootcamps() {
   const [bootcamps, setBootcamps] = useState([]);
@@ -77,16 +82,30 @@ export default function ManageBootcamps() {
       const response = await getBootcampById(id);
       const b = response.data;
       setEditingId(id);
-      setForm({
-        title: b.title,
-        description: b.description,
-        startDate: b.startDate,
-        endDate: b.endDate,
-        mode: b.mode,
-        seats: b.seats,
-        published: b.published,
-        courseIds: b.courses.map((c) => c.id),
-      });
+      // setForm({
+      //   title: b.title,
+      //   description: b.description,
+      //   startDate: b.startDate,
+      //   endDate: b.endDate,
+      //   mode: b.mode,
+      //   seats: b.seats,
+      //   published: b.published,
+      //   courseIds: b.courses.map((c) => c.id),
+      // });
+
+      
+setForm({
+  title: b.title,
+  description: b.description,
+  startDate: b.startDate,
+  endDate: b.endDate,
+  mode: b.mode,
+  seats: b.seats,
+  fee: b.fee ?? 0, // ADD THIS LINE
+  published: b.published,
+  courseIds: (b.courses || []).map((c) => c.id),
+});
+
       setShowForm(true);
     } catch (err) {
       setPageError("Could not load that bootcamp for editing.");
@@ -96,7 +115,15 @@ export default function ManageBootcamps() {
   const handleSave = async () => {
     setFormError("");
     setIsSaving(true);
-    const payload = { ...form, seats: Number(form.seats) };
+    // const payload = { ...form, seats: Number(form.seats) };
+
+    
+const payload = {
+  ...form,
+  seats: Number(form.seats),
+  fee: Number(form.fee),
+};
+
     try {
       if (editingId) {
         await updateBootcamp(editingId, payload);
@@ -202,6 +229,15 @@ export default function ManageBootcamps() {
                 onChange={(e) => updateField("seats", e.target.value)}
               />
             </div>
+            <div>
+            <label>Fee (₹) — 0 = free</label>
+            <input
+              type="number"
+              min={0}
+              value={form.fee}
+              onChange={(e) => updateField("fee", e.target.value)}
+            />
+          </div>
           </div>
 
           <label>Linked courses</label>
@@ -262,6 +298,8 @@ export default function ManageBootcamps() {
               <th>Status</th>
               <th>Seats</th>
               <th>Courses</th>
+              <th>Fee</th>
+              <th>Revenue</th>
               <th></th>
             </tr>
           </thead>
@@ -285,6 +323,14 @@ export default function ManageBootcamps() {
                   {b.enrolledCount}/{b.seats}
                 </td>
                 <td>{b.courseCount}</td>
+
+                <td>{b.fee > 0 ? `₹${b.fee.toLocaleString("en-IN")}` : "Free"}</td>
+                <td>{b.revenue != null ? `₹${Number(b.revenue).toLocaleString("en-IN")}` : "—"}</td>
+
+                <Link to={`/admin/bootcamps/${b.id}/sessions`} className="btn btn-secondary">
+                  Sessions
+                </Link>
+
                 <td className="bc-row-actions">
                   <button type="button" className="btn btn-secondary" onClick={() => openEdit(b.id)}>
                     Edit

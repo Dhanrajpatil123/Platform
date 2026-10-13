@@ -36,6 +36,12 @@ import ManageAnnouncement from "./pages/admin/ManageAnnouncement";
 import BootcampCatalog from "./pages/BootcampCatalog";
 import BootcampDetails from "./pages/BootcampDetails";
 import ManageBootcamps from "./pages/admin/ManageBootcamps";
+import ManageBootcampSessions from "./pages/admin/ManageBootcampSessions";
+
+
+import MyCertificates from "./pages/MyCertificates";
+import CertificateView from "./pages/CertificateView";
+import ManageCertificates from "./pages/admin/ManageCertificates";
 
 
 
@@ -73,6 +79,9 @@ function App() {
           <Route path="/contests/:contestId" element={<ContestDetails />} />
           <Route path="/contests/:contestId/leaderboard" element={<ContestLeaderboard />} />
 
+          <Route path="/certificates" element={<MyCertificates />} />
+          <Route path="/verify/:code" element={<CertificateView />} />
+
           <Route element={<AdminRoute />}>
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/admin/problems" element={<ManageProblems />} />
@@ -82,6 +91,8 @@ function App() {
             <Route path="/admin/users" element={<ManageUsers />} />
             <Route path="/admin/announcement" element={<ManageAnnouncement />} />
             <Route path="/admin/bootcamps" element={<ManageBootcamps />} />
+            <Route path="/admin/bootcamps/:bootcampId/sessions" element={<ManageBootcampSessions />} />
+            <Route path="/admin/certificates" element={<ManageCertificates />} />
           </Route>
         </Route>
 

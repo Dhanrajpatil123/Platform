@@ -1,17 +1,12 @@
 package com.extratechsolution.service;
 
 import com.extratechsolution.dto.BootcampDetailResponse;
+import com.extratechsolution.dto.BootcampEnrollRequest;
 import com.extratechsolution.dto.BootcampRequest;
 import com.extratechsolution.dto.BootcampSummaryResponse;
-import com.extratechsolution.entity.Bootcamp;
-import com.extratechsolution.entity.BootcampEnrollment;
-import com.extratechsolution.entity.Course;
-import com.extratechsolution.entity.User;
+import com.extratechsolution.entity.*;
 import com.extratechsolution.enums.Role;
-import com.extratechsolution.repository.BootcampEnrollmentRepository;
-import com.extratechsolution.repository.BootcampRepository;
-import com.extratechsolution.repository.CourseRepository;
-import com.extratechsolution.repository.UserRepository;
+import com.extratechsolution.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,11 +23,15 @@ import java.util.Set;
 public class BootcampService {
 
     private static final Set<String> MODES = Set.of("ONLINE", "OFFLINE", "HYBRID");
+    private static final int MAX_FEE = 1_000_000;
 
     private final BootcampRepository bootcampRepository;
     private final BootcampEnrollmentRepository enrollmentRepository;
     private final CourseRepository courseRepository;
     private final UserRepository userRepository;
+    private final BootcampPaymentService paymentService;
+    private final BootcampSessionRepository sessionRepository;
+    private final BootcampAttendanceRepository attendanceRepository;
 
     // ---------- Public / student ----------
 
@@ -50,8 +49,7 @@ public class BootcampService {
     @Transactional(readOnly = true)
     public BootcampDetailResponse getById(Long id, String username) {
         User viewer = resolve(username);
-        Bootcamp bootcamp = findVisible(id, viewer);
-        return toDetail(bootcamp, viewer);
+        return toDetail(findVisible(id, viewer), viewer);
     }
 
     @Transactional(readOnly = true)
@@ -65,7 +63,7 @@ public class BootcampService {
     }
 
     @Transactional
-    public BootcampDetailResponse enroll(Long id, String username) {
+    public BootcampDetailResponse enroll(Long id, BootcampEnrollRequest request, String username) {
         User user = requireUser(username);
         Bootcamp bootcamp = findVisible(id, user);
 
@@ -79,9 +77,18 @@ public class BootcampService {
             throw new IllegalStateException("This bootcamp is full.");
         }
 
+        int fee = bootcamp.getFee();
+        String reference = null;
+        if (fee > 0) {
+            String method = request == null ? null : request.getPaymentMethod();
+            reference = paymentService.charge(user, bootcamp, method);
+        }
+
         BootcampEnrollment enrollment = new BootcampEnrollment();
         enrollment.setUser(user);
         enrollment.setBootcamp(bootcamp);
+        enrollment.setAmountPaid(fee);
+        enrollment.setPaymentReference(reference);
         enrollmentRepository.save(enrollment);
 
         return toDetail(bootcamp, user);
@@ -122,13 +129,19 @@ public class BootcampService {
         return toDetail(bootcamp, resolve(username));
     }
 
+
     @Transactional
     public void delete(Long id) {
         Bootcamp bootcamp = bootcampRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Bootcamp not found."));
+        for (BootcampSession s : sessionRepository.findByBootcamp_IdOrderBySessionDateAscStartTimeAsc(id)) {
+            attendanceRepository.deleteBySession_Id(s.getId());
+        }
+        sessionRepository.deleteByBootcamp_Id(id);
         enrollmentRepository.deleteByBootcampId(id);
         bootcampRepository.delete(bootcamp);
     }
+
 
     // ---------- Helpers ----------
 
@@ -152,6 +165,10 @@ public class BootcampService {
         if (r.getSeats() == null || r.getSeats() < 1) {
             throw new IllegalArgumentException("Seats must be at least 1.");
         }
+        int fee = r.getFee() == null ? 0 : r.getFee();
+        if (fee < 0 || fee > MAX_FEE) {
+            throw new IllegalArgumentException("Fee must be between 0 and " + MAX_FEE + " (0 = free).");
+        }
 
         bootcamp.setTitle(r.getTitle().trim());
         bootcamp.setDescription(r.getDescription().trim());
@@ -159,6 +176,7 @@ public class BootcampService {
         bootcamp.setEndDate(r.getEndDate());
         bootcamp.setMode(mode);
         bootcamp.setSeats(r.getSeats());
+        bootcamp.setFee(fee);
         bootcamp.setPublished(r.getPublished() == null || r.getPublished());
 
         bootcamp.getCourses().clear();
@@ -205,15 +223,22 @@ public class BootcampService {
 
     private BootcampSummaryResponse toSummary(Bootcamp b, User viewer) {
         boolean enrolled = viewer != null && enrollmentRepository.existsByUserAndBootcamp(viewer, b);
+        Long revenue = isAdmin(viewer) ? enrollmentRepository.sumAmountPaidByBootcampId(b.getId()) : null;
         return new BootcampSummaryResponse(
                 b.getId(), b.getTitle(), b.getMode(), b.getStartDate(), b.getEndDate(),
                 statusOf(b), b.getSeats(),
                 (int) enrollmentRepository.countByBootcampId(b.getId()),
-                b.getCourses().size(), b.isPublished(), enrolled);
+                b.getCourses().size(), b.isPublished(), enrolled, b.getFee(), revenue);
     }
 
     private BootcampDetailResponse toDetail(Bootcamp b, User viewer) {
         boolean enrolled = viewer != null && enrollmentRepository.existsByUserAndBootcamp(viewer, b);
+        String reference = null;
+        if (enrolled) {
+            reference = enrollmentRepository.findByUserAndBootcamp(viewer, b)
+                    .map(BootcampEnrollment::getPaymentReference)
+                    .orElse(null);
+        }
         List<BootcampDetailResponse.CourseItem> courses = b.getCourses().stream()
                 .sorted(Comparator.comparing(Course::getId))
                 .map(c -> new BootcampDetailResponse.CourseItem(
@@ -224,6 +249,6 @@ public class BootcampService {
                 b.getId(), b.getTitle(), b.getDescription(), b.getMode(),
                 b.getStartDate(), b.getEndDate(), statusOf(b), b.getSeats(),
                 (int) enrollmentRepository.countByBootcampId(b.getId()),
-                b.isPublished(), enrolled, courses);
+                b.isPublished(), enrolled, b.getFee(), reference, courses);
     }
 }

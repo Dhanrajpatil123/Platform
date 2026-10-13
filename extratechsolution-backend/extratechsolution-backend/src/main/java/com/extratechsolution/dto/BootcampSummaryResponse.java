@@ -13,10 +13,12 @@ public class BootcampSummaryResponse {
     private String mode;
     private LocalDate startDate;
     private LocalDate endDate;
-    private String status;      // UPCOMING, ONGOING, COMPLETED
+    private String status;
     private int seats;
     private int enrolledCount;
     private int courseCount;
     private boolean published;
     private boolean enrolled;
+    private int fee;
+    private Long revenue;   // only filled in for admins, null for students
 }

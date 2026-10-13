@@ -19,4 +19,5 @@ public class BootcampRequest {
     private Integer seats;
     private Boolean published;
     private List<Long> courseIds;
+    private Integer fee;
 }
