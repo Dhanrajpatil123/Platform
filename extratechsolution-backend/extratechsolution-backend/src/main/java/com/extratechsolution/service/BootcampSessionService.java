@@ -168,6 +168,13 @@ public class BootcampSessionService {
             throw new IllegalArgumentException("Meeting link must start with http:// or https://");
         }
 
+        boolean timeChanged = session.getSessionDate() == null
+                || !session.getSessionDate().equals(r.getSessionDate())
+                || !r.getStartTime().equals(session.getStartTime());
+        if (timeChanged) {
+            session.setReminderSent(false);
+        }
+
         session.setTitle(r.getTitle().trim());
         session.setDescription(r.getDescription() == null || r.getDescription().isBlank()
                 ? null : r.getDescription().trim());

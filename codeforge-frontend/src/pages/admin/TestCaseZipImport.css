@@ -1,0 +1,11 @@
+.tcz-box { border: 1px dashed #2a2a3d; border-radius: 10px; padding: 1rem; margin: 1rem 0; background: rgba(0, 229, 255, 0.03); }
+.tcz-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem; }
+.tcz-link { background: none; border: none; color: #00e5ff; cursor: pointer; font-size: 0.8rem; text-decoration: underline; }
+.tcz-hint { color: #9ca3af; font-size: 0.8rem; margin: 0 0 0.75rem 0; }
+.tcz-hint code { background: #0a0a12; padding: 0.05rem 0.35rem; border-radius: 4px; color: #e5e7eb; }
+.tcz-row { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
+.tcz-check { display: flex; gap: 0.5rem; align-items: center; font-size: 0.8rem; color: #e5e7eb; margin-top: 0.75rem; cursor: pointer; }
+.tcz-error { color: #ff5f56; font-size: 0.85rem; margin: 0.6rem 0 0 0; }
+.tcz-result { margin-top: 0.75rem; font-size: 0.85rem; color: #e5e7eb; }
+.tcz-result p { margin: 0.2rem 0; }
+.tcz-result ul { margin: 0.4rem 0 0 1.1rem; color: #ffbd2e; font-size: 0.78rem; }

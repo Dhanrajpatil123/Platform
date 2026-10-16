@@ -104,7 +104,11 @@ export default function CodingWorkspace() {
 
   const [activeTab, setActiveTab] = useState("description");
   const [language, setLanguage] = useState("Java");
-  const [code, setCode] = useState(() => loadDraft(problemId, "Java", null));
+  // const [code, setCode] = useState(() => loadDraft(problemId, "Java", null));
+
+  const [code, setCode] = useState(languageStarters.Java);
+  const [draftScope, setDraftScope] = useState(null);
+
   const [customInput, setCustomInput] = useState("");
   const [output, setOutput] = useState(null);
   const [isRunning, setIsRunning] = useState(false);
@@ -129,50 +133,119 @@ export default function CodingWorkspace() {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isTogglingBookmark, setIsTogglingBookmark] = useState(false);
 
+  // useEffect(() => {
+  //   async function fetchProblem() {
+  //     setIsLoading(true);
+  //     setLoadError("");
+  //     try {
+  //       const response = await getProblemById(problemId);
+  //       setProblem(response.data);
+  //       setIsBookmarked(Boolean(response.data.bookmarked));
+  //       setCode(loadDraft(problemId, language, response.data.contestId));
+
+  //       if (response.data.contestId) {
+  //         try {
+  //           const contestResponse = await getContestById(response.data.contestId);
+  //           setContestStatus(contestResponse.data.status);
+
+  //           if (contestResponse.data.registered) {
+  //             const attemptResponse = await getContestAttempt(response.data.contestId);
+  //             setContestAttempt(attemptResponse.data);
+  //           } else {
+  //             setContestAttempt(null);
+  //           }
+  //         } catch (err) {
+  //           setContestStatus(null);
+  //           setContestAttempt(null);
+  //         }
+  //       } else {
+  //         setContestStatus(null);
+  //         setContestAttempt(null);
+  //       }
+  //     } catch (err) {
+  //       setLoadError("Problem not found.");
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   }
+  //   fetchProblem();
+
+  //   setCustomInput("");
+  //   setSubmissions([]);
+  //   setSubmissionsLoaded(false);
+  //   setExpandedSubmissionId(null);
+  //   setOutput(null);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [problemId]);
+
+
+
+
   useEffect(() => {
-    async function fetchProblem() {
-      setIsLoading(true);
-      setLoadError("");
-      try {
-        const response = await getProblemById(problemId);
-        setProblem(response.data);
-        setIsBookmarked(Boolean(response.data.bookmarked));
-        setCode(loadDraft(problemId, language, response.data.contestId));
+  let cancelled = false;
 
-        if (response.data.contestId) {
-          try {
-            const contestResponse = await getContestById(response.data.contestId);
-            setContestStatus(contestResponse.data.status);
+  async function fetchProblem() {
+    setIsLoading(true);
+    setLoadError("");
+    try {
+      const response = await getProblemById(problemId);
+      const loaded = response.data;
 
-            if (contestResponse.data.registered) {
-              const attemptResponse = await getContestAttempt(response.data.contestId);
-              setContestAttempt(attemptResponse.data);
-            } else {
-              setContestAttempt(null);
+      // Contest problems get a draft scope unique to THIS attempt, so a fresh
+      // attempt always starts from the starter code, never from practice drafts.
+      let scope = null;
+      let status = null;
+      let attempt = null;
+
+      if (loaded.contestId) {
+        scope = String(loaded.contestId);
+        try {
+          const contestResponse = await getContestById(loaded.contestId);
+          status = contestResponse.data.status;
+          if (contestResponse.data.registered) {
+            const attemptResponse = await getContestAttempt(loaded.contestId);
+            attempt = attemptResponse.data;
+            if (attempt && attempt.deadline) {
+              scope = `${loaded.contestId}-${attempt.deadline}`;
             }
-          } catch (err) {
-            setContestStatus(null);
-            setContestAttempt(null);
           }
-        } else {
-          setContestStatus(null);
-          setContestAttempt(null);
+        } catch (err) {
+          status = null;
+          attempt = null;
         }
-      } catch (err) {
-        setLoadError("Problem not found.");
-      } finally {
-        setIsLoading(false);
       }
-    }
-    fetchProblem();
 
-    setCustomInput("");
-    setSubmissions([]);
-    setSubmissionsLoaded(false);
-    setExpandedSubmissionId(null);
-    setOutput(null);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [problemId]);
+      if (cancelled) return;
+
+      setProblem(loaded);
+      setIsBookmarked(Boolean(loaded.bookmarked));
+      setContestStatus(status);
+      setContestAttempt(attempt);
+      setDraftScope(scope);
+      setCode(loadDraft(problemId, language, scope));
+    } catch (err) {
+      if (!cancelled) setLoadError("Problem not found.");
+    } finally {
+      if (!cancelled) setIsLoading(false);
+    }
+  }
+  fetchProblem();
+
+  setCustomInput("");
+  setSubmissions([]);
+  setSubmissionsLoaded(false);
+  setExpandedSubmissionId(null);
+  setOutput(null);
+
+  return () => {
+    cancelled = true;
+  };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [problemId]);
+
+
+
+
 
   // Previous/Next comes from the server, which knows whether this problem is
   // being viewed as part of a course, a live contest, or the general catalog.
@@ -243,17 +316,35 @@ export default function CodingWorkspace() {
     }
   }, []);
 
+  // const handleLanguageChange = (e) => {
+  //   const newLang = e.target.value;
+  //   setLanguage(newLang);
+  //   setCode(loadDraft(problemId, newLang, problem?.contestId));
+  // };
+
+
   const handleLanguageChange = (e) => {
-    const newLang = e.target.value;
-    setLanguage(newLang);
-    setCode(loadDraft(problemId, newLang, problem?.contestId));
-  };
+      const newLang = e.target.value;
+      setLanguage(newLang);
+      setCode(loadDraft(problemId, newLang, draftScope));
+    };
+
+
+
+  // const handleCodeChange = (value) => {
+  //   const newCode = value ?? "";
+  //   setCode(newCode);
+  //   localStorage.setItem(draftKey(problemId, language, problem?.contestId), newCode);
+  // };
+
 
   const handleCodeChange = (value) => {
     const newCode = value ?? "";
     setCode(newCode);
-    localStorage.setItem(draftKey(problemId, language, problem?.contestId), newCode);
+    localStorage.setItem(draftKey(problemId, language, draftScope), newCode);
   };
+
+
 
   const handleResetCode = () => {
     if (
@@ -263,7 +354,8 @@ export default function CodingWorkspace() {
     ) {
       return;
     }
-    localStorage.removeItem(draftKey(problemId, language, problem?.contestId));
+    // localStorage.removeItem(draftKey(problemId, language, problem?.contestId));
+    localStorage.removeItem(draftKey(problemId, language, draftScope));
     setCode(languageStarters[language]);
   };
 

@@ -193,6 +193,11 @@ export default function CourseDetails() {
       <div className="syllabus">
         <div className="syllabus-header">
           <h2>Syllabus</h2>
+
+          <p style={{ color: "#9ca3af", fontSize: "0.8rem", margin: "0 0 0.75rem 0" }}>
+            Progress counts problems you solve <strong>after</strong> enrolling in this course.
+          </p>
+
           {isLoggedIn && (
             <span className="syllabus-solved-count">
               {solvedCount} / {course.syllabus.length} solved

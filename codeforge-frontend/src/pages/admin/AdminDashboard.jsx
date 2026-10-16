@@ -47,6 +47,12 @@ export default function AdminDashboard() {
         </Link>
 
 
+        <Link to="/admin/tracks" className="admin-action-card">
+          <h3>Manage Track</h3>
+          <p>Create, update, and manage certificates.</p>
+        </Link>
+
+
       </div>
     </div>
   );

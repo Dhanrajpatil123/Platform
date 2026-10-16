@@ -1,0 +1,29 @@
+.trk-chip { font-size: 0.75rem; font-weight: 700; color: #c9a24d; border: 1px solid rgba(201, 162, 77, 0.4); border-radius: 999px; padding: 0.15rem 0.65rem; }
+.trk-desc { color: #9ca3af; font-size: 0.85rem; line-height: 1.5; margin: 0 0 1rem 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.trk-progress-text { margin-top: 0.4rem; }
+.trk-meta { gap: 1.5rem; justify-content: flex-start; margin-top: 1rem; }
+.trk-progress { margin-top: 1rem; }
+.trk-note { margin: 1rem 0 0 0; }
+
+.trk-roadmap { display: flex; flex-direction: column; gap: 0.7rem; position: relative; }
+.trk-step { display: flex; align-items: center; gap: 1rem; background: #12121f; border: 1px solid #2a2a3d; border-radius: 12px; padding: 0.9rem 1.1rem; text-decoration: none; color: #e5e7eb; }
+.trk-step:hover { border-color: #00e5ff; }
+.trk-step-marker { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; background: #0a0a12; border: 2px solid #2a2a3d; color: #9ca3af; flex-shrink: 0; }
+.trk-step-completed .trk-step-marker { background: rgba(39, 201, 63, 0.15); border-color: #27c93f; color: #27c93f; }
+.trk-step-in-progress .trk-step-marker { border-color: #00e5ff; color: #00e5ff; }
+.trk-step-body { flex: 1; min-width: 0; }
+.trk-step-title { font-weight: 600; margin-bottom: 0.2rem; }
+.trk-step-bar { width: 140px; flex-shrink: 0; }
+
+.trk-picker { background: #0a0a12; border: 1px solid #2a2a3d; border-radius: 8px; padding: 0.5rem; display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 0.6rem; }
+.trk-picker-row { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; padding: 0.4rem 0.6rem; background: #12121f; border-radius: 6px; font-size: 0.88rem; }
+.trk-picker-actions { display: flex; gap: 0.3rem; }
+.trk-picker-actions button { background: #1c1c30; border: 1px solid #2a2a3d; color: #e5e7eb; border-radius: 6px; width: 28px; height: 28px; cursor: pointer; }
+.trk-picker-actions button:disabled { opacity: 0.35; cursor: default; }
+.trk-add-row { display: flex; gap: 0.6rem; }
+.trk-add-row select { flex: 1; padding: 0.55rem 0.75rem; background: #0a0a12; border: 1px solid #2a2a3d; border-radius: 6px; color: #e5e7eb; }
+
+@media (max-width: 640px) {
+  .trk-step { flex-wrap: wrap; }
+  .trk-step-bar { width: 100%; }
+}

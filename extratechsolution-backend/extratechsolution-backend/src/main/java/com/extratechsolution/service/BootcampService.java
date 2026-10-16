@@ -33,6 +33,8 @@ public class BootcampService {
     private final BootcampSessionRepository sessionRepository;
     private final BootcampAttendanceRepository attendanceRepository;
 
+    private final NotificationService notificationService;
+
     // ---------- Public / student ----------
 
     @Transactional(readOnly = true)
@@ -90,6 +92,9 @@ public class BootcampService {
         enrollment.setAmountPaid(fee);
         enrollment.setPaymentReference(reference);
         enrollmentRepository.save(enrollment);
+
+        notificationService.bootcampEnrolled(user, bootcamp.getId(), bootcamp.getTitle(), bootcamp.getStartDate(),
+                bootcamp.getEndDate(), bootcamp.getMode(), fee, reference);
 
         return toDetail(bootcamp, user);
     }

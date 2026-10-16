@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { getPremiumStatus } from "../api/premiumApi";
 import AnnouncementBanner from "./AnnouncementBanner";
-import SearchBar from "./SearchBar";
-import Logo from "./Logo";
+import Navbar from "./Navbar";
+import "../styles/responsive.css";
 
 export default function Layout() {
   const navigate = useNavigate();
@@ -51,73 +51,20 @@ export default function Layout() {
     navigate("/auth");
   };
 
-  // IMPORTANT: one single tree. <main> must always be the 3rd child of
-  // app-shell, otherwise React remounts the whole page whenever lockdown
-  // toggles (which caused the endless reload loop during contests).
+  // One stable tree: <main> must stay the 3rd child so the page never remounts
+  // when contest lockdown toggles.
   return (
     <div className="app-shell">
       {!isContestLockdown && <AnnouncementBanner />}
 
-      <header className="navbar">
-        {isContestLockdown ? (
-          <>
-            <span className="navbar-brand">
-              <Logo size={30} />
-            </span>
-            <span className="navbar-lockdown-note">
-              Contest in progress — use "End Contest" to leave this screen
-            </span>
-          </>
-        ) : (
-          <>
-            <Link to="/" className="navbar-brand">
-              <Logo size={30} />
-            </Link>
-
-            <SearchBar />
-
-            <nav className="navbar-links">
-              <Link to="/problems">Problems</Link>
-              <Link to="/courses">Courses</Link>
-              <Link to="/contests">Contests</Link>
-              <Link to="/playground">Playground</Link>
-              <Link to="/leaderboard">Leaderboard</Link>
-              <Link to="/premium">Premium</Link>
-              
-              <Link to="/bootcamps">Bootcamps</Link>
-
-
-              {isLoggedIn ? (
-                <>
-                  <Link to="/dashboard">Dashboard</Link>
-                  <Link to="/profile">Profile</Link>
-                  <Link to="/bookmarks">Bookmarks</Link>
-                  <Link to="/certificates">Certificates</Link>
-                  
-                  {role === "ADMIN" && (
-                    <Link to="/admin" className="navbar-admin-link">
-                      Admin
-                    </Link>
-                  )}
-                  <span className="navbar-username">
-                    Hi, {username}
-                    {isPremium && role !== "ADMIN" && (
-                      <span className="premium-badge">PRO</span>
-                    )}
-                  </span>
-                  <button type="button" className="navbar-logout-btn" onClick={handleLogout}>
-                    Log Out
-                  </button>
-                </>
-              ) : (
-                <Link to="/auth" className="navbar-auth-link">
-                  Sign In / Sign Up
-                </Link>
-              )}
-            </nav>
-          </>
-        )}
-      </header>
+      <Navbar
+        locked={isContestLockdown}
+        isLoggedIn={isLoggedIn}
+        username={username}
+        role={role}
+        isPremium={isPremium}
+        onLogout={handleLogout}
+      />
 
       <main className="app-content">
         <Outlet />

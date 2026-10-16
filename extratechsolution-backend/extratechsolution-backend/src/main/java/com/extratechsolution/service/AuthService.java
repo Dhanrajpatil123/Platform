@@ -22,6 +22,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
     private final PasswordResetTokenRepository passwordResetTokenRepository;
+    private final NotificationService notificationService;
 
 
     public AuthResponse signup(SignupRequest request) {
@@ -76,7 +77,10 @@ public class AuthService {
             // Swap this line for a real email send once SMTP is set up.
             System.out.println("=== PASSWORD RESET LINK for " + email + " ===");
             System.out.println(resetLink);
+            notificationService.passwordReset(user.getEmail(), user.getUsername(), resetLink);
             System.out.println("=== Expires in 30 minutes ===");
+
+
         });
 
         // Deliberately does nothing different if the email doesn't exist —

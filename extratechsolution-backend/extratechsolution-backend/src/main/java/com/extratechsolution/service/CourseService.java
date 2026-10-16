@@ -15,6 +15,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.extratechsolution.entity.User;
+import com.extratechsolution.repository.UserRepository;
+import java.util.Set;
+
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,6 +31,9 @@ public class CourseService {
     private final ProblemRepository problemRepository;
     private final CourseEnrollmentRepository enrollmentRepository;
     private final SubmissionRepository submissionRepository;
+
+    private final UserRepository userRepository;
+    private final CourseProgressService progressService;
 
     @Transactional(readOnly = true)
     public List<CourseSummaryResponse> getAllCourses() {
@@ -110,12 +118,26 @@ public class CourseService {
     }
 
     private CourseDetailResponse toDetailResponse(Course course, String usernameOrNull) {
+
+        Set<Long> solvedSinceEnrollment = Set.of();
+        if (usernameOrNull != null) {
+            User viewer = userRepository.findByUsername(usernameOrNull).orElse(null);
+            if (viewer != null) {
+                solvedSinceEnrollment = enrollmentRepository.findByUserAndCourse(viewer, course)
+                        .map(e -> progressService.solvedProblemIdsSince(viewer, e.getEnrolledAt()))
+                        .orElse(Set.of());
+            }
+        }
+        final Set<Long> solvedIds = solvedSinceEnrollment;
+
+
         List<CourseDetailResponse.SyllabusItemResponse> syllabusItems = course.getSyllabus()
                 .stream()
                 .map(cp -> {
-                    boolean solved = usernameOrNull != null
-                            && submissionRepository.existsByUser_UsernameAndProblem_IdAndStatus(
-                            usernameOrNull, cp.getProblem().getId(), SubmissionStatus.ACCEPTED);
+//                    boolean solved = usernameOrNull != null
+//                            && submissionRepository.existsByUser_UsernameAndProblem_IdAndStatus(
+//                            usernameOrNull, cp.getProblem().getId(), SubmissionStatus.ACCEPTED);
+                    boolean solved = solvedIds.contains(cp.getProblem().getId());
 
                     return new CourseDetailResponse.SyllabusItemResponse(
                             cp.getProblem().getId(),

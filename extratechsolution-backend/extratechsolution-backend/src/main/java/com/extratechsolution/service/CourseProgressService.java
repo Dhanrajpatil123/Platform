@@ -29,14 +29,14 @@ public class CourseProgressService {
                         boolean complete) {}
 
     /** Problems the user solved (ACCEPTED) at or after the given moment. */
-    public Set<Long> solvedProblemIdsSince(User user, LocalDateTime since) {
-        if (since == null) return Set.of();
-        return submissionRepository.findByUserOrderBySubmittedAtDesc(user).stream()
-                .filter(s -> s.getStatus() == SubmissionStatus.ACCEPTED)
-                .filter(s -> s.getSubmittedAt() != null && !s.getSubmittedAt().isBefore(since))
-                .map(s -> s.getProblem().getId())
-                .collect(Collectors.toSet());
-    }
+//    public Set<Long> solvedProblemIdsSince(User user, LocalDateTime since) {
+//        if (since == null) return Set.of();
+//        return submissionRepository.findByUserOrderBySubmittedAtDesc(user).stream()
+//                .filter(s -> s.getStatus() == SubmissionStatus.ACCEPTED)
+//                .filter(s -> s.getSubmittedAt() != null && !s.getSubmittedAt().isBefore(since))
+//                .map(s -> s.getProblem().getId())
+//                .collect(Collectors.toSet());
+//    }
 
     /** Progress across one or more courses. Distinct problems are counted once overall. */
     public Stats stats(User user, List<Course> courses, LocalDateTime since) {
@@ -66,5 +66,12 @@ public class CourseProgressService {
         int percent = totalProblems == 0 ? 0 : solvedProblems * 100 / totalProblems;
         return new Stats(stats, totalProblems, solvedProblems, percent,
                 totalProblems > 0 && solvedProblems >= totalProblems);
+    }
+
+    /** Problems the user solved (ACCEPTED) at or after the given moment — one DB query. */
+    public Set<Long> solvedProblemIdsSince(User user, LocalDateTime since) {
+        if (since == null) return Set.of();
+        return new HashSet<>(submissionRepository.findSolvedProblemIdsSince(
+                user.getId(), SubmissionStatus.ACCEPTED, since));
     }
 }

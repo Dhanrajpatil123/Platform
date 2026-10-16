@@ -1,0 +1,29 @@
+.ln-page { color: #e5e7eb; max-width: 1180px; margin: 0 auto; }
+.ln-center { text-align: center; padding: 3rem 0; }
+.ln-h1 { font-size: 1.6rem; margin: 0 0 1rem 0; }
+.ln-h2 { font-size: 1.15rem; margin: 2rem 0 0.8rem 0; }
+.ln-muted { color: #9ca3af; font-size: 0.85rem; }
+.ln-error { color: #ff5f56; }
+.ln-link { color: #00e5ff; text-decoration: none; }
+.ln-gold { color: #ffbd2e; }
+
+.ln-hero { display: flex; justify-content: space-between; align-items: center; gap: 1.25rem; flex-wrap: wrap; background: linear-gradient(135deg, rgba(0, 229, 255, 0.1), rgba(10, 132, 255, 0.08)); border: 1px solid rgba(0, 229, 255, 0.3); border-radius: 14px; padding: 1.4rem 1.6rem; }
+.ln-hero-session { background: linear-gradient(135deg, rgba(39, 201, 63, 0.12), rgba(0, 229, 255, 0.06)); border-color: rgba(39, 201, 63, 0.45); }
+.ln-hero-certificate { background: linear-gradient(135deg, rgba(255, 189, 46, 0.14), rgba(201, 162, 77, 0.06)); border-color: rgba(255, 189, 46, 0.5); }
+.ln-hero-text { min-width: 0; flex: 1 1 260px; }
+.ln-hero-title { font-size: 1.25rem; font-weight: 700; }
+.ln-hero-sub { color: #9ca3af; font-size: 0.9rem; margin-top: 0.3rem; }
+
+.ln-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.9rem; margin-top: 1.1rem; }
+.ln-stat { background: #12121f; border: 1px solid #2a2a3d; border-radius: 12px; padding: 1rem; text-align: center; }
+.ln-stat-num { font-size: 1.7rem; font-weight: 800; color: #00e5ff; }
+.ln-stat-label { color: #9ca3af; font-size: 0.78rem; margin-top: 0.15rem; }
+
+.ln-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; }
+.ln-card { background: #12121f; border: 1px solid #2a2a3d; border-radius: 12px; padding: 1.1rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.ln-card-title { color: #e5e7eb; font-weight: 700; font-size: 1.02rem; text-decoration: none; }
+.ln-card-title:hover { color: #00e5ff; }
+.ln-bar { height: 6px; background: #1f1f33; border-radius: 999px; overflow: hidden; }
+.ln-bar-fill { height: 100%; background: linear-gradient(90deg, #00e5ff, #0090ff); border-radius: 999px; }
+.ln-next { font-size: 0.85rem; }
+.ln-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.4rem; }

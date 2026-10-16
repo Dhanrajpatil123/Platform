@@ -42,4 +42,7 @@ public class BootcampSession {
 
     @Column(length = 1000)
     private String meetingLink;
+
+    @Column(nullable = false, columnDefinition = "BOOLEAN NOT NULL DEFAULT FALSE")
+    private boolean reminderSent = false;
 }

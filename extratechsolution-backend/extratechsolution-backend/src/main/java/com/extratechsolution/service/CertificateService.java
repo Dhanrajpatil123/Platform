@@ -3,7 +3,6 @@ package com.extratechsolution.service;
 import com.extratechsolution.dto.*;
 import com.extratechsolution.entity.*;
 import com.extratechsolution.enums.CertificateType;
-import com.extratechsolution.enums.SubmissionStatus;
 import com.extratechsolution.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,11 +34,14 @@ public class CertificateService {
     private final UserRepository userRepository;
     private final CourseRepository courseRepository;
     private final CourseEnrollmentRepository courseEnrollmentRepository;
-    private final SubmissionRepository submissionRepository;
     private final BootcampRepository bootcampRepository;
     private final BootcampEnrollmentRepository bootcampEnrollmentRepository;
     private final BootcampSessionRepository sessionRepository;
     private final BootcampAttendanceRepository attendanceRepository;
+    private final TrackRepository trackRepository;
+    private final TrackEnrollmentRepository trackEnrollmentRepository;
+    private final CourseProgressService progressService;
+    private final NotificationService notificationService;
 
     private record Eval(boolean eligible, String status, String label, int percent,
                         String message, LocalDate completionDate, String detail) {}
@@ -65,15 +67,23 @@ public class CertificateService {
 
         List<EligibilityItemResponse> items = new ArrayList<>();
 
-        for (CourseEnrollment enrollment : courseEnrollmentRepository.findByUser(user)) {
-            Course course = enrollment.getCourse();
+        for (CourseEnrollment e : courseEnrollmentRepository.findByUser(user)) {
+            Course course = e.getCourse();
             items.add(item(CertificateType.COURSE, course.getId(), course.getTitle(),
-                    evaluateCourse(user, course), issued.get(key(CertificateType.COURSE, course.getId()))));
+                    evaluateCourse(user, course, e.getEnrolledAt()),
+                    issued.get(key(CertificateType.COURSE, course.getId()))));
         }
-        for (BootcampEnrollment enrollment : bootcampEnrollmentRepository.findByUser(user)) {
-            Bootcamp bootcamp = enrollment.getBootcamp();
+        for (BootcampEnrollment e : bootcampEnrollmentRepository.findByUser(user)) {
+            Bootcamp bootcamp = e.getBootcamp();
             items.add(item(CertificateType.BOOTCAMP, bootcamp.getId(), bootcamp.getTitle(),
-                    evaluateBootcamp(user, bootcamp), issued.get(key(CertificateType.BOOTCAMP, bootcamp.getId()))));
+                    evaluateBootcamp(user, bootcamp),
+                    issued.get(key(CertificateType.BOOTCAMP, bootcamp.getId()))));
+        }
+        for (TrackEnrollment e : trackEnrollmentRepository.findByUser(user)) {
+            Track track = e.getTrack();
+            items.add(item(CertificateType.TRACK, track.getId(), track.getTitle(),
+                    evaluateTrack(user, track, e.getEnrolledAt()),
+                    issued.get(key(CertificateType.TRACK, track.getId()))));
         }
 
         items.sort(Comparator.comparingInt(i -> rank(i.getStatus())));
@@ -99,22 +109,32 @@ public class CertificateService {
 
         Eval eval;
         String title;
-        if (request.getType() == CertificateType.COURSE) {
-            Course course = courseRepository.findById(request.getReferenceId())
-                    .orElseThrow(() -> new NoSuchElementException("Course not found."));
-            boolean enrolled = courseEnrollmentRepository.findByUser(user).stream()
-                    .anyMatch(e -> e.getCourse().getId().equals(course.getId()));
-            if (!enrolled) throw new IllegalStateException("You must be enrolled in this course.");
-            eval = evaluateCourse(user, course);
-            title = course.getTitle();
-        } else {
-            Bootcamp bootcamp = bootcampRepository.findById(request.getReferenceId())
-                    .orElseThrow(() -> new NoSuchElementException("Bootcamp not found."));
-            if (!bootcampEnrollmentRepository.existsByUserAndBootcamp(user, bootcamp)) {
-                throw new IllegalStateException("You must be enrolled in this bootcamp.");
+        switch (request.getType()) {
+            case COURSE -> {
+                Course course = courseRepository.findById(request.getReferenceId())
+                        .orElseThrow(() -> new NoSuchElementException("Course not found."));
+                CourseEnrollment enrollment = courseEnrollmentRepository.findByUserAndCourse(user, course)
+                        .orElseThrow(() -> new IllegalStateException("You must be enrolled in this course."));
+                eval = evaluateCourse(user, course, enrollment.getEnrolledAt());
+                title = course.getTitle();
             }
-            eval = evaluateBootcamp(user, bootcamp);
-            title = bootcamp.getTitle();
+            case BOOTCAMP -> {
+                Bootcamp bootcamp = bootcampRepository.findById(request.getReferenceId())
+                        .orElseThrow(() -> new NoSuchElementException("Bootcamp not found."));
+                if (!bootcampEnrollmentRepository.existsByUserAndBootcamp(user, bootcamp)) {
+                    throw new IllegalStateException("You must be enrolled in this bootcamp.");
+                }
+                eval = evaluateBootcamp(user, bootcamp);
+                title = bootcamp.getTitle();
+            }
+            default -> {
+                Track track = trackRepository.findById(request.getReferenceId())
+                        .orElseThrow(() -> new NoSuchElementException("Track not found."));
+                TrackEnrollment enrollment = trackEnrollmentRepository.findByUserAndTrack(user, track)
+                        .orElseThrow(() -> new IllegalStateException("You must be enrolled in this track."));
+                eval = evaluateTrack(user, track, enrollment.getEnrolledAt());
+                title = track.getTitle();
+            }
         }
 
         if (!eval.eligible()) {
@@ -132,6 +152,8 @@ public class CertificateService {
         certificate.setIssuedDate(LocalDate.now());
         certificate.setCompletionDate(eval.completionDate());
         certificateRepository.save(certificate);
+
+        notificationService.certificateIssued(user, name, title, certificate.getCertificateCode());
 
         return toResponse(certificate);
     }
@@ -192,15 +214,12 @@ public class CertificateService {
 
     // ---------- Eligibility rules ----------
 
-    private Eval evaluateCourse(User user, Course course) {
+    private Eval evaluateCourse(User user, Course course, LocalDateTime enrolledAt) {
+        Set<Long> solvedIds = progressService.solvedProblemIdsSince(user, enrolledAt);
         int total = course.getSyllabus().size();
-        int solved = 0;
-        for (CourseProblem cp : course.getSyllabus()) {
-            if (submissionRepository.existsByUser_UsernameAndProblem_IdAndStatus(
-                    user.getUsername(), cp.getProblem().getId(), SubmissionStatus.ACCEPTED)) {
-                solved++;
-            }
-        }
+        int solved = (int) course.getSyllabus().stream()
+                .filter(cp -> solvedIds.contains(cp.getProblem().getId()))
+                .count();
         int percent = total == 0 ? 0 : solved * 100 / total;
         String label = solved + " of " + total + " problems solved";
 
@@ -209,13 +228,32 @@ public class CertificateService {
         }
         if (solved < total) {
             return new Eval(false, "IN_PROGRESS", label, percent,
-                    "Solve all " + total + " problems to unlock your certificate (" + (total - solved) + " to go).",
-                    null, null);
+                    "Solve all " + total + " problems after enrolling to unlock your certificate ("
+                            + (total - solved) + " to go).", null, null);
         }
         String detail = "All " + total + " problems solved · "
                 + capitalize(String.valueOf(course.getDifficulty())) + " level";
         return new Eval(true, "ELIGIBLE", label, 100,
                 "You've solved every problem — claim your certificate!", LocalDate.now(), detail);
+    }
+
+    private Eval evaluateTrack(User user, Track track, LocalDateTime enrolledAt) {
+        CourseProgressService.Stats stats = progressService.stats(user, track.getCourses(), enrolledAt);
+        int courses = track.getCourses().size();
+        String label = stats.solvedProblems() + " of " + stats.totalProblems()
+                + " problems solved across " + courses + " courses";
+
+        if (stats.totalProblems() == 0) {
+            return new Eval(false, "NOT_ELIGIBLE", label, 0, "This track has no problems yet.", null, null);
+        }
+        if (!stats.complete()) {
+            return new Eval(false, "IN_PROGRESS", label, stats.percent(),
+                    "Solve all " + stats.totalProblems() + " problems in the track to unlock your certificate ("
+                            + (stats.totalProblems() - stats.solvedProblems()) + " to go).", null, null);
+        }
+        String detail = courses + " courses · " + stats.totalProblems() + " problems solved";
+        return new Eval(true, "ELIGIBLE", label, 100,
+                "You completed the whole track — claim your certificate!", LocalDate.now(), detail);
     }
 
     private Eval evaluateBootcamp(User user, Bootcamp bootcamp) {
@@ -282,14 +320,18 @@ public class CertificateService {
     private String cleanName(String raw) {
         String name = raw == null ? "" : raw.trim().replaceAll("\\s+", " ");
         if (!NAME.matcher(name).matches()) {
-            throw new IllegalArgumentException(
-                    "Please enter your full name (3–60 characters, letters only).");
+            throw new IllegalArgumentException("Please enter your full name (3–60 characters, letters only).");
         }
         return name;
     }
 
     private String generateCode(CertificateType type) {
-        String prefix = "ETS-" + (type == CertificateType.COURSE ? "CR" : "BC") + "-" + Year.now().getValue() + "-";
+        String kind = switch (type) {
+            case COURSE -> "CR";
+            case BOOTCAMP -> "BC";
+            case TRACK -> "TR";
+        };
+        String prefix = "ETS-" + kind + "-" + Year.now().getValue() + "-";
         String code;
         do {
             StringBuilder sb = new StringBuilder(prefix);

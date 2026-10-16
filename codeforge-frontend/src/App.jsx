@@ -43,6 +43,13 @@ import MyCertificates from "./pages/MyCertificates";
 import CertificateView from "./pages/CertificateView";
 import ManageCertificates from "./pages/admin/ManageCertificates";
 
+import TrackCatalog from "./pages/TrackCatalog";
+import TrackDetails from "./pages/TrackDetails";
+import NotificationSettings from "./pages/NotificationSettings";
+import ManageTracks from "./pages/admin/ManageTracks";
+
+import LearningDashboard from "./pages/LearningDashboard";
+
 
 
 function App() {
@@ -82,6 +89,15 @@ function App() {
           <Route path="/certificates" element={<MyCertificates />} />
           <Route path="/verify/:code" element={<CertificateView />} />
 
+          <Route path="/tracks" element={<TrackCatalog />} />
+          <Route path="/tracks/:trackId" element={<TrackDetails />} />
+          <Route path="/settings/notifications" element={<NotificationSettings />} />
+
+
+          <Route path="/learning" element={<LearningDashboard />} />
+
+
+
           <Route element={<AdminRoute />}>
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/admin/problems" element={<ManageProblems />} />
@@ -93,6 +109,7 @@ function App() {
             <Route path="/admin/bootcamps" element={<ManageBootcamps />} />
             <Route path="/admin/bootcamps/:bootcampId/sessions" element={<ManageBootcampSessions />} />
             <Route path="/admin/certificates" element={<ManageCertificates />} />
+            <Route path="/admin/tracks" element={<ManageTracks />} />
           </Route>
         </Route>
 

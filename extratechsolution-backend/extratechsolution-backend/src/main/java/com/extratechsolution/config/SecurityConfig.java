@@ -74,6 +74,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/bootcamps/admin/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/bootcamps/me").authenticated()
                         .requestMatchers(HttpMethod.GET, "/api/bootcamps", "/api/bootcamps/*").permitAll()
+                        .requestMatchers("/api/tracks/admin/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/tracks", "/api/tracks/*").permitAll()
                         .anyRequest().authenticated()
                 )
 //                .addFilterBefore(rateLimitingFilter, JwtAuthFilter.class)
